@@ -74,12 +74,6 @@ public class Juegos extends JFrame {
 		btnJuegos.setBounds(428, 350, 300, 50);
 		contentPane.add(btnJuegos);
 		
-		JButton btnNewButton = new JButton("<--");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(100, 182, 172));
-		btnNewButton.setBounds(10, 11, 50, 50);
-		contentPane.add(btnNewButton);
-		
 		JButton btnE = new JButton("e");
 		btnE.setForeground(Color.WHITE);
 		btnE.setBackground(new Color(100, 182, 172));
@@ -94,6 +88,7 @@ public class Juegos extends JFrame {
 		
 		ImageIcon imagen1=new ImageIcon("./planta1.png");
 		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		ImageIcon imagen3=new ImageIcon("./flechita.png");
 		
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -104,6 +99,24 @@ public class Juegos extends JFrame {
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
+		
+		JLabel lblAtras = new JLabel("");
+		lblAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(usuario==null) {
+					new ExamenesYJuegos().setVisible(true);
+					dispose();
+				}
+				else {
+					new ExamenesYJuegos(usuario).setVisible(true);
+					dispose();
+				}
+			}
+		});
+		lblAtras.setIcon(imagen3);
+		lblAtras.setBounds(10, 11, 50, 50);
+		contentPane.add(lblAtras);
 	}
 	
 	public Juegos(String usuario) {

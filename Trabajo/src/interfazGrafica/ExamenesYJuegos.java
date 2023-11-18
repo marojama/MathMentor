@@ -78,6 +78,7 @@ public class ExamenesYJuegos extends JFrame {
 		
 		ImageIcon imagen1=new ImageIcon("./planta1.png");
 		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		ImageIcon imagen3=new ImageIcon("./flechita.png");
 		
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -88,12 +89,30 @@ public class ExamenesYJuegos extends JFrame {
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
+		
+		JLabel lblAtras = new JLabel("");
+		lblAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(usuario==null) {
+					new PantallaProfesora().setVisible(true);
+					dispose();
+				}
+				else {
+					new PantallaInicial().setVisible(true);
+					dispose();
+				}
+			}
+		});
+		lblAtras.setIcon(imagen3);
+		lblAtras.setBounds(10, 11, 50, 50);
+		contentPane.add(lblAtras);
 	}
 	
 	public ExamenesYJuegos(String usuario) {
 		this();
 		this.usuario=usuario;
-		if(usuario.equals("invitado")) {
+		if(usuario!=null && usuario.equals("invitado")) {
 			btnExamenes.setVisible(false);
 		}
 	}

@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class NerdleNormal extends JFrame {
 
@@ -63,7 +65,6 @@ public class NerdleNormal extends JFrame {
 	private JTextField tf_67;
 	private JTextField tf_68;
 	private JLabel lblNewLabel;
-	private JButton btnNewButton;
 	private String usuario;
 
 
@@ -874,14 +875,9 @@ public class NerdleNormal extends JFrame {
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
 		
-		btnNewButton = new JButton("<--");
-		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBackground(new Color(100, 182, 172));
-		btnNewButton.setBounds(10, 11, 50, 50);
-		contentPane.add(btnNewButton);
-		
 		ImageIcon imagen1=new ImageIcon("./planta1.png");
 		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		ImageIcon imagen3=new ImageIcon("./flechita.png");
 		
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -892,5 +888,22 @@ public class NerdleNormal extends JFrame {
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
+		
+		JLabel lblAtras = new JLabel("");
+		lblAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(usuario==null) {
+					new ExamenesYJuegos().setVisible(true);
+				}
+				else {
+					new ExamenesYJuegos(usuario).setVisible(true);
+				}
+				dispose();
+			}
+		});
+		lblAtras.setIcon(imagen3);
+		lblAtras.setBounds(10, 11, 50, 50);
+		contentPane.add(lblAtras);
 	}
 }
