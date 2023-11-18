@@ -10,12 +10,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ExamenesYJuegos extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnJuegos;
 	private JButton btnExamenes;
+	private String usuario;
 
 	/**
 	 * Launch the application.
@@ -60,6 +63,12 @@ public class ExamenesYJuegos extends JFrame {
 		contentPane.add(btnExamenes);
 		
 		btnJuegos = new JButton("Juegos");
+		btnJuegos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaJuegos();
+			}
+		});
 		btnJuegos.setForeground(Color.WHITE);
 		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnJuegos.setBackground(new Color(100, 182, 172));
@@ -69,9 +78,16 @@ public class ExamenesYJuegos extends JFrame {
 	
 	public ExamenesYJuegos(String usuario) {
 		this();
+		this.usuario=usuario;
 		if(usuario.equals("invitado")) {
 			btnExamenes.setVisible(false);
 		}
+	}
+	
+	private void cambiarPantallaJuegos() {
+		Juegos j=new Juegos(this.usuario);
+		j.setVisible(true);
+		this.dispose();
 	}
 
 }

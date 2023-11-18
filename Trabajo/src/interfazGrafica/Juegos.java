@@ -10,10 +10,13 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Juegos extends JFrame {
 
 	private JPanel contentPane;
+	private String usuario;
 
 	/**
 	 * Launch the application.
@@ -51,6 +54,12 @@ public class Juegos extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNerdle = new JButton("Nerdle");
+		btnNerdle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaNerdle();
+			}
+		});
 		btnNerdle.setForeground(Color.WHITE);
 		btnNerdle.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnNerdle.setBackground(new Color(100, 182, 172));
@@ -81,6 +90,17 @@ public class Juegos extends JFrame {
 		btnNewButton_2.setBackground(new Color(100, 182, 172));
 		btnNewButton_2.setBounds(783, 350, 50, 50);
 		contentPane.add(btnNewButton_2);
+	}
+	
+	public Juegos(String usuario) {
+		this();
+		this.usuario=usuario;
+	}
+	
+	private void cambiarPantallaNerdle() {
+		NerdleNormal nn=new NerdleNormal(this.usuario);
+		nn.setVisible(true);
+		this.dispose();
 	}
 
 }

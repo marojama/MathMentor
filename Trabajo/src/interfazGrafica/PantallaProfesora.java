@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PantallaProfesora extends JFrame {
 
@@ -64,7 +66,13 @@ public class PantallaProfesora extends JFrame {
 		btnVerEnvios.setBounds(490, 300, 300, 50);
 		contentPane.add(btnVerEnvios);
 		
-		JButton btnVerEstadsticas = new JButton("Ver estadísticas");
+		JButton btnVerEstadsticas = new JButton("Juegos y Estadísticas");
+		btnVerEstadsticas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaJuegos();
+			}
+		});
 		btnVerEstadsticas.setForeground(Color.WHITE);
 		btnVerEstadsticas.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnVerEstadsticas.setBackground(new Color(100, 182, 172));
@@ -77,6 +85,12 @@ public class PantallaProfesora extends JFrame {
 		btnCrearExamen.setBackground(new Color(100, 182, 172));
 		btnCrearExamen.setBounds(490, 500, 300, 50);
 		contentPane.add(btnCrearExamen);
+	}
+	
+	private void cambiarPantallaJuegos() {
+		Juegos j=new Juegos();
+		j.setVisible(true);
+		this.dispose();
 	}
 
 }
