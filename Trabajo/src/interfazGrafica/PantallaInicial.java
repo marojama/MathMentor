@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -78,6 +80,19 @@ public class PantallaInicial extends JFrame {
 		btnInvitado.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnInvitado.setBounds(490, 350, 300, 50);
 		contentPane.add(btnInvitado);
+		
+		ImageIcon imagen1=new ImageIcon("./planta1.png");
+		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		
+		JLabel lblPlanta1 = new JLabel();
+		lblPlanta1.setIcon(imagen1);
+		lblPlanta1.setBounds(89, 0, 216, 510);
+		contentPane.add(lblPlanta1);
+		
+		JLabel lblPlanta2 = new JLabel();
+		lblPlanta2.setIcon(imagen2);
+		lblPlanta2.setBounds(985, 480, 200, 205);
+		contentPane.add(lblPlanta2);
 	}
 	
 	private void cambiarPantallaInicio() {
@@ -91,5 +106,4 @@ public class PantallaInicial extends JFrame {
 		ej.setVisible(true);
 		this.dispose();
 	}
-	
 }

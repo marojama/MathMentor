@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -90,6 +91,19 @@ public class Juegos extends JFrame {
 		btnNewButton_2.setBackground(new Color(100, 182, 172));
 		btnNewButton_2.setBounds(783, 350, 50, 50);
 		contentPane.add(btnNewButton_2);
+		
+		ImageIcon imagen1=new ImageIcon("./planta1.png");
+		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		
+		JLabel lblPlanta1 = new JLabel();
+		lblPlanta1.setIcon(imagen1);
+		lblPlanta1.setBounds(89, 0, 216, 510);
+		contentPane.add(lblPlanta1);
+		
+		JLabel lblPlanta2 = new JLabel();
+		lblPlanta2.setIcon(imagen2);
+		lblPlanta2.setBounds(985, 480, 200, 205);
+		contentPane.add(lblPlanta2);
 	}
 	
 	public Juegos(String usuario) {

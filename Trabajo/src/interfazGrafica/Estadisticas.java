@@ -55,5 +55,7 @@ public class Estadisticas extends JFrame {
 		btnNewButton.setBackground(new Color(100, 182, 172));
 		btnNewButton.setBounds(10, 11, 50, 50);
 		contentPane.add(btnNewButton);
+		
+		
 	}
 }

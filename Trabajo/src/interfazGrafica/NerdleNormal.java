@@ -879,5 +879,18 @@ public class NerdleNormal extends JFrame {
 		btnNewButton.setBackground(new Color(100, 182, 172));
 		btnNewButton.setBounds(10, 11, 50, 50);
 		contentPane.add(btnNewButton);
+		
+		ImageIcon imagen1=new ImageIcon("./planta1.png");
+		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		
+		JLabel lblPlanta1 = new JLabel();
+		lblPlanta1.setIcon(imagen1);
+		lblPlanta1.setBounds(89, 0, 216, 510);
+		contentPane.add(lblPlanta1);
+		
+		JLabel lblPlanta2 = new JLabel();
+		lblPlanta2.setIcon(imagen2);
+		lblPlanta2.setBounds(985, 480, 200, 205);
+		contentPane.add(lblPlanta2);
 	}
 }
