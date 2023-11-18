@@ -5,12 +5,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import principal.Usuarios;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class InicioSesion extends JFrame {
 
@@ -65,10 +72,32 @@ public class InicioSesion extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaPrincipal(textField.getText());
+			}
+		});
 		btnEntrar.setForeground(Color.WHITE);
 		btnEntrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnEntrar.setBackground(new Color(100, 182, 172));
 		btnEntrar.setBounds(490, 437, 300, 50);
 		contentPane.add(btnEntrar);
+	}
+	
+	private void cambiarPantallaPrincipal(String usuario) {
+		if(usuario.equals("marojamaProfe")) {
+			PantallaProfesora pr=new PantallaProfesora();
+			pr.setVisible(true);
+			this.dispose();
+		}
+		else if(Usuarios.existeUsuario(usuario)) {
+			ExamenesYJuegos ej=new ExamenesYJuegos(usuario);
+			ej.setVisible(true);
+			this.dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "No se encuentra tu usuario. Habla con tu profe o comprueba que lo hayas escrito bien.", "Error usuario", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

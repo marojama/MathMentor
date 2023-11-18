@@ -10,6 +10,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PantallaInicial extends JFrame {
 
@@ -45,24 +47,49 @@ public class PantallaInicial extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("MathMentor");
-		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 11, 1248, 84);
-		contentPane.add(lblNewLabel);
+		JLabel lblNombre = new JLabel("MathMentor");
+		lblNombre.setFont(new Font("Courier New", Font.PLAIN, 70));
+		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombre.setBounds(10, 11, 1248, 84);
+		contentPane.add(lblNombre);
 		
-		JButton btnNewButton = new JButton("Iniciar sesión");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(100, 182, 172));
-		btnNewButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnNewButton.setBounds(490, 258, 300, 50);
-		contentPane.add(btnNewButton);
+		JButton btnIniciarSesion = new JButton("Iniciar sesión");
+		btnIniciarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaInicio();
+			}
+		});
+		btnIniciarSesion.setForeground(new Color(255, 255, 255));
+		btnIniciarSesion.setBackground(new Color(100, 182, 172));
+		btnIniciarSesion.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnIniciarSesion.setBounds(490, 258, 300, 50);
+		contentPane.add(btnIniciarSesion);
 		
 		JButton btnInvitado = new JButton("Invitado");
+		btnInvitado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaJuegos();
+			}
+		});
 		btnInvitado.setForeground(new Color(255, 255, 255));
 		btnInvitado.setBackground(new Color(100, 182, 172));
 		btnInvitado.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnInvitado.setBounds(490, 350, 300, 50);
 		contentPane.add(btnInvitado);
 	}
+	
+	private void cambiarPantallaInicio() {
+		InicioSesion is=new InicioSesion();
+		is.setVisible(true);
+		this.dispose();
+	}
+	
+	private void cambiarPantallaJuegos() {
+		ExamenesYJuegos ej=new ExamenesYJuegos("invitado");
+		ej.setVisible(true);
+		this.dispose();
+	}
+	
 }

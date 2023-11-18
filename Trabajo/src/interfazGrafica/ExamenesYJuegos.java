@@ -14,6 +14,8 @@ import javax.swing.JButton;
 public class ExamenesYJuegos extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnJuegos;
+	private JButton btnExamenes;
 
 	/**
 	 * Launch the application.
@@ -50,19 +52,26 @@ public class ExamenesYJuegos extends JFrame {
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnExamenes = new JButton("Examenes");
+		btnExamenes = new JButton("Examenes");
 		btnExamenes.setForeground(Color.WHITE);
 		btnExamenes.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnExamenes.setBackground(new Color(100, 182, 172));
 		btnExamenes.setBounds(490, 258, 300, 50);
 		contentPane.add(btnExamenes);
 		
-		JButton btnJuegos = new JButton("Juegos");
+		btnJuegos = new JButton("Juegos");
 		btnJuegos.setForeground(Color.WHITE);
 		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnJuegos.setBackground(new Color(100, 182, 172));
 		btnJuegos.setBounds(490, 350, 300, 50);
 		contentPane.add(btnJuegos);
+	}
+	
+	public ExamenesYJuegos(String usuario) {
+		this();
+		if(usuario.equals("invitado")) {
+			btnExamenes.setVisible(false);
+		}
 	}
 
 }
