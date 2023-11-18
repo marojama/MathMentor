@@ -1,4 +1,4 @@
-package nerdleNormal;
+package interfazGrafica;
 
 import java.awt.EventQueue;
 
@@ -62,6 +62,8 @@ public class NerdleNormal extends JFrame {
 	private JTextField tf_66;
 	private JTextField tf_67;
 	private JTextField tf_68;
+	private JLabel lblNewLabel;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -84,9 +86,9 @@ public class NerdleNormal extends JFrame {
 	 */
 	public NerdleNormal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 778, 746);
+		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(new Color(218, 255, 239));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -98,7 +100,7 @@ public class NerdleNormal extends JFrame {
 		contentPane.add(btn1);
 		btn1.setForeground(Color.BLACK);
 		btn1.setBackground(new Color(226, 232, 240));
-		btn1.setLocation(73, 496);
+		btn1.setLocation(337, 524);
 		
 		tf_11 = new JTextField();
 		tf_11.addKeyListener(new KeyAdapter() {
@@ -110,7 +112,7 @@ public class NerdleNormal extends JFrame {
 		tf_11.setFont(new Font("Arial", Font.BOLD, 22));
 		tf_11.setForeground(Color.WHITE);
 		tf_11.setBackground(new Color(152, 148, 132));
-		tf_11.setBounds(108, 83, 56, 56);
+		tf_11.setBounds(372, 111, 56, 56);
 		contentPane.add(tf_11);
 		tf_11.setColumns(10);
 		
@@ -125,7 +127,7 @@ public class NerdleNormal extends JFrame {
 		tf_12.setForeground(Color.WHITE);
 		tf_12.setBackground(new Color(152, 148, 132));
 		tf_12.setColumns(10);
-		tf_12.setBounds(174, 83, 56, 56);
+		tf_12.setBounds(438, 111, 56, 56);
 		contentPane.add(tf_12);
 		
 		tf_13 = new JTextField();
@@ -139,7 +141,7 @@ public class NerdleNormal extends JFrame {
 		tf_13.setBackground(new Color(152, 148, 132));
 		tf_13.setForeground(Color.WHITE);
 		tf_13.setColumns(10);
-		tf_13.setBounds(240, 83, 56, 56);
+		tf_13.setBounds(504, 111, 56, 56);
 		contentPane.add(tf_13);
 		
 		tf_14 = new JTextField();
@@ -148,7 +150,7 @@ public class NerdleNormal extends JFrame {
 		tf_14.setBackground(new Color(152, 148, 132));
 		tf_14.setForeground(Color.WHITE);
 		tf_14.setColumns(10);
-		tf_14.setBounds(306, 83, 56, 56);
+		tf_14.setBounds(570, 111, 56, 56);
 		contentPane.add(tf_14);
 		
 		tf_15 = new JTextField();
@@ -162,7 +164,7 @@ public class NerdleNormal extends JFrame {
 		tf_15.setBackground(new Color(152, 148, 132));
 		tf_15.setForeground(Color.WHITE);
 		tf_15.setColumns(10);
-		tf_15.setBounds(372, 83, 56, 56);
+		tf_15.setBounds(636, 111, 56, 56);
 		contentPane.add(tf_15);
 		
 		tf_16 = new JTextField();
@@ -176,7 +178,7 @@ public class NerdleNormal extends JFrame {
 		tf_16.setBackground(new Color(152, 148, 132));
 		tf_16.setForeground(Color.WHITE);
 		tf_16.setColumns(10);
-		tf_16.setBounds(438, 83, 56, 56);
+		tf_16.setBounds(702, 111, 56, 56);
 		contentPane.add(tf_16);
 		
 		tf_17 = new JTextField();
@@ -190,7 +192,7 @@ public class NerdleNormal extends JFrame {
 		tf_17.setBackground(new Color(152, 148, 132));
 		tf_17.setForeground(Color.WHITE);
 		tf_17.setColumns(10);
-		tf_17.setBounds(504, 83, 56, 56);
+		tf_17.setBounds(768, 111, 56, 56);
 		contentPane.add(tf_17);
 		
 		tf_18 = new JTextField();
@@ -204,7 +206,7 @@ public class NerdleNormal extends JFrame {
 		tf_18.setBackground(new Color(152, 148, 132));
 		tf_18.setForeground(Color.WHITE);
 		tf_18.setColumns(10);
-		tf_18.setBounds(570, 83, 56, 56);
+		tf_18.setBounds(834, 111, 56, 56);
 		contentPane.add(tf_18);
 		
 		tf_21 = new JTextField();
@@ -218,7 +220,7 @@ public class NerdleNormal extends JFrame {
 		tf_21.setBackground(new Color(152, 148, 132));
 		tf_21.setForeground(Color.WHITE);
 		tf_21.setColumns(10);
-		tf_21.setBounds(108, 150, 56, 56);
+		tf_21.setBounds(372, 178, 56, 56);
 		contentPane.add(tf_21);
 		
 		tf_22 = new JTextField();
@@ -232,7 +234,7 @@ public class NerdleNormal extends JFrame {
 		tf_22.setBackground(new Color(152, 148, 132));
 		tf_22.setForeground(Color.WHITE);
 		tf_22.setColumns(10);
-		tf_22.setBounds(174, 150, 56, 56);
+		tf_22.setBounds(438, 178, 56, 56);
 		contentPane.add(tf_22);
 		
 		tf_23 = new JTextField();
@@ -246,7 +248,7 @@ public class NerdleNormal extends JFrame {
 		tf_23.setBackground(new Color(152, 148, 132));
 		tf_23.setForeground(Color.WHITE);
 		tf_23.setColumns(10);
-		tf_23.setBounds(240, 150, 56, 56);
+		tf_23.setBounds(504, 178, 56, 56);
 		contentPane.add(tf_23);
 		
 		tf_24 = new JTextField();
@@ -260,7 +262,7 @@ public class NerdleNormal extends JFrame {
 		tf_24.setBackground(new Color(152, 148, 132));
 		tf_24.setForeground(Color.WHITE);
 		tf_24.setColumns(10);
-		tf_24.setBounds(306, 150, 56, 56);
+		tf_24.setBounds(570, 178, 56, 56);
 		contentPane.add(tf_24);
 		
 		tf_25 = new JTextField();
@@ -274,7 +276,7 @@ public class NerdleNormal extends JFrame {
 		tf_25.setBackground(new Color(152, 148, 132));
 		tf_25.setForeground(Color.WHITE);
 		tf_25.setColumns(10);
-		tf_25.setBounds(372, 150, 56, 56);
+		tf_25.setBounds(636, 178, 56, 56);
 		contentPane.add(tf_25);
 		
 		tf_26 = new JTextField();
@@ -288,7 +290,7 @@ public class NerdleNormal extends JFrame {
 		tf_26.setBackground(new Color(152, 148, 132));
 		tf_26.setForeground(Color.WHITE);
 		tf_26.setColumns(10);
-		tf_26.setBounds(438, 150, 56, 56);
+		tf_26.setBounds(702, 178, 56, 56);
 		contentPane.add(tf_26);
 		
 		tf_27 = new JTextField();
@@ -302,7 +304,7 @@ public class NerdleNormal extends JFrame {
 		tf_27.setBackground(new Color(152, 148, 132));
 		tf_27.setForeground(Color.WHITE);
 		tf_27.setColumns(10);
-		tf_27.setBounds(504, 150, 56, 56);
+		tf_27.setBounds(768, 178, 56, 56);
 		contentPane.add(tf_27);
 		
 		tf_28 = new JTextField();
@@ -316,7 +318,7 @@ public class NerdleNormal extends JFrame {
 		tf_28.setBackground(new Color(152, 148, 132));
 		tf_28.setForeground(Color.WHITE);
 		tf_28.setColumns(10);
-		tf_28.setBounds(570, 150, 56, 56);
+		tf_28.setBounds(834, 178, 56, 56);
 		contentPane.add(tf_28);
 		
 		tf_31 = new JTextField();
@@ -330,7 +332,7 @@ public class NerdleNormal extends JFrame {
 		tf_31.setBackground(new Color(152, 148, 132));
 		tf_31.setForeground(Color.WHITE);
 		tf_31.setColumns(10);
-		tf_31.setBounds(108, 217, 56, 56);
+		tf_31.setBounds(372, 245, 56, 56);
 		contentPane.add(tf_31);
 		
 		tf_32 = new JTextField();
@@ -344,7 +346,7 @@ public class NerdleNormal extends JFrame {
 		tf_32.setBackground(new Color(152, 148, 132));
 		tf_32.setForeground(Color.WHITE);
 		tf_32.setColumns(10);
-		tf_32.setBounds(174, 217, 56, 56);
+		tf_32.setBounds(438, 245, 56, 56);
 		contentPane.add(tf_32);
 		
 		tf_33 = new JTextField();
@@ -358,7 +360,7 @@ public class NerdleNormal extends JFrame {
 		tf_33.setBackground(new Color(152, 148, 132));
 		tf_33.setForeground(Color.WHITE);
 		tf_33.setColumns(10);
-		tf_33.setBounds(240, 217, 56, 56);
+		tf_33.setBounds(504, 245, 56, 56);
 		contentPane.add(tf_33);
 		
 		tf_34 = new JTextField();
@@ -372,7 +374,7 @@ public class NerdleNormal extends JFrame {
 		tf_34.setBackground(new Color(152, 148, 132));
 		tf_34.setForeground(Color.WHITE);
 		tf_34.setColumns(10);
-		tf_34.setBounds(306, 217, 56, 56);
+		tf_34.setBounds(570, 245, 56, 56);
 		contentPane.add(tf_34);
 		
 		tf_35 = new JTextField();
@@ -386,7 +388,7 @@ public class NerdleNormal extends JFrame {
 		tf_35.setBackground(new Color(152, 148, 132));
 		tf_35.setForeground(Color.WHITE);
 		tf_35.setColumns(10);
-		tf_35.setBounds(372, 217, 56, 56);
+		tf_35.setBounds(636, 245, 56, 56);
 		contentPane.add(tf_35);
 		
 		tf_36 = new JTextField();
@@ -400,7 +402,7 @@ public class NerdleNormal extends JFrame {
 		tf_36.setBackground(new Color(152, 148, 132));
 		tf_36.setForeground(Color.WHITE);
 		tf_36.setColumns(10);
-		tf_36.setBounds(438, 217, 56, 56);
+		tf_36.setBounds(702, 245, 56, 56);
 		contentPane.add(tf_36);
 		
 		tf_37 = new JTextField();
@@ -414,7 +416,7 @@ public class NerdleNormal extends JFrame {
 		tf_37.setBackground(new Color(152, 148, 132));
 		tf_37.setForeground(Color.WHITE);
 		tf_37.setColumns(10);
-		tf_37.setBounds(504, 217, 56, 56);
+		tf_37.setBounds(768, 245, 56, 56);
 		contentPane.add(tf_37);
 		
 		tf_38 = new JTextField();
@@ -428,7 +430,7 @@ public class NerdleNormal extends JFrame {
 		tf_38.setBackground(new Color(152, 148, 132));
 		tf_38.setForeground(Color.WHITE);
 		tf_38.setColumns(10);
-		tf_38.setBounds(570, 217, 56, 56);
+		tf_38.setBounds(834, 245, 56, 56);
 		contentPane.add(tf_38);
 		
 		tf_41 = new JTextField();
@@ -442,7 +444,7 @@ public class NerdleNormal extends JFrame {
 		tf_41.setBackground(new Color(152, 148, 132));
 		tf_41.setForeground(Color.WHITE);
 		tf_41.setColumns(10);
-		tf_41.setBounds(108, 284, 56, 56);
+		tf_41.setBounds(372, 312, 56, 56);
 		contentPane.add(tf_41);
 		
 		tf_42 = new JTextField();
@@ -456,7 +458,7 @@ public class NerdleNormal extends JFrame {
 		tf_42.setBackground(new Color(152, 148, 132));
 		tf_42.setForeground(Color.WHITE);
 		tf_42.setColumns(10);
-		tf_42.setBounds(174, 284, 56, 56);
+		tf_42.setBounds(438, 312, 56, 56);
 		contentPane.add(tf_42);
 		
 		tf_43 = new JTextField();
@@ -470,7 +472,7 @@ public class NerdleNormal extends JFrame {
 		tf_43.setBackground(new Color(152, 148, 132));
 		tf_43.setForeground(Color.WHITE);
 		tf_43.setColumns(10);
-		tf_43.setBounds(240, 284, 56, 56);
+		tf_43.setBounds(504, 312, 56, 56);
 		contentPane.add(tf_43);
 		
 		tf_44 = new JTextField();
@@ -484,7 +486,7 @@ public class NerdleNormal extends JFrame {
 		tf_44.setBackground(new Color(152, 148, 132));
 		tf_44.setForeground(Color.WHITE);
 		tf_44.setColumns(10);
-		tf_44.setBounds(306, 284, 56, 56);
+		tf_44.setBounds(570, 312, 56, 56);
 		contentPane.add(tf_44);
 		
 		tf_45 = new JTextField();
@@ -498,7 +500,7 @@ public class NerdleNormal extends JFrame {
 		tf_45.setBackground(new Color(152, 148, 132));
 		tf_45.setForeground(Color.WHITE);
 		tf_45.setColumns(10);
-		tf_45.setBounds(372, 284, 56, 56);
+		tf_45.setBounds(636, 312, 56, 56);
 		contentPane.add(tf_45);
 		
 		tf_46 = new JTextField();
@@ -512,7 +514,7 @@ public class NerdleNormal extends JFrame {
 		tf_46.setBackground(new Color(152, 148, 132));
 		tf_46.setForeground(Color.WHITE);
 		tf_46.setColumns(10);
-		tf_46.setBounds(438, 284, 56, 56);
+		tf_46.setBounds(702, 312, 56, 56);
 		contentPane.add(tf_46);
 		
 		tf_47 = new JTextField();
@@ -526,7 +528,7 @@ public class NerdleNormal extends JFrame {
 		tf_47.setBackground(new Color(152, 148, 132));
 		tf_47.setForeground(Color.WHITE);
 		tf_47.setColumns(10);
-		tf_47.setBounds(504, 284, 56, 56);
+		tf_47.setBounds(768, 312, 56, 56);
 		contentPane.add(tf_47);
 		
 		tf_48 = new JTextField();
@@ -540,7 +542,7 @@ public class NerdleNormal extends JFrame {
 		tf_48.setBackground(new Color(152, 148, 132));
 		tf_48.setForeground(Color.WHITE);
 		tf_48.setColumns(10);
-		tf_48.setBounds(570, 284, 56, 56);
+		tf_48.setBounds(834, 312, 56, 56);
 		contentPane.add(tf_48);
 		
 		tf_51 = new JTextField();
@@ -554,7 +556,7 @@ public class NerdleNormal extends JFrame {
 		tf_51.setBackground(new Color(152, 148, 132));
 		tf_51.setForeground(Color.WHITE);
 		tf_51.setColumns(10);
-		tf_51.setBounds(108, 351, 56, 56);
+		tf_51.setBounds(372, 379, 56, 56);
 		contentPane.add(tf_51);
 		
 		tf_52 = new JTextField();
@@ -568,7 +570,7 @@ public class NerdleNormal extends JFrame {
 		tf_52.setBackground(new Color(152, 148, 132));
 		tf_52.setForeground(Color.WHITE);
 		tf_52.setColumns(10);
-		tf_52.setBounds(174, 351, 56, 56);
+		tf_52.setBounds(438, 379, 56, 56);
 		contentPane.add(tf_52);
 		
 		tf_53 = new JTextField();
@@ -582,7 +584,7 @@ public class NerdleNormal extends JFrame {
 		tf_53.setBackground(new Color(152, 148, 132));
 		tf_53.setForeground(Color.WHITE);
 		tf_53.setColumns(10);
-		tf_53.setBounds(240, 351, 56, 56);
+		tf_53.setBounds(504, 379, 56, 56);
 		contentPane.add(tf_53);
 		
 		tf_54 = new JTextField();
@@ -596,7 +598,7 @@ public class NerdleNormal extends JFrame {
 		tf_54.setBackground(new Color(152, 148, 132));
 		tf_54.setForeground(Color.WHITE);
 		tf_54.setColumns(10);
-		tf_54.setBounds(306, 351, 56, 56);
+		tf_54.setBounds(570, 379, 56, 56);
 		contentPane.add(tf_54);
 		
 		tf_55 = new JTextField();
@@ -610,7 +612,7 @@ public class NerdleNormal extends JFrame {
 		tf_55.setBackground(new Color(152, 148, 132));
 		tf_55.setForeground(Color.WHITE);
 		tf_55.setColumns(10);
-		tf_55.setBounds(372, 351, 56, 56);
+		tf_55.setBounds(636, 379, 56, 56);
 		contentPane.add(tf_55);
 		
 		tf_56 = new JTextField();
@@ -624,7 +626,7 @@ public class NerdleNormal extends JFrame {
 		tf_56.setBackground(new Color(152, 148, 132));
 		tf_56.setForeground(Color.WHITE);
 		tf_56.setColumns(10);
-		tf_56.setBounds(438, 351, 56, 56);
+		tf_56.setBounds(702, 379, 56, 56);
 		contentPane.add(tf_56);
 		
 		tf_57 = new JTextField();
@@ -638,7 +640,7 @@ public class NerdleNormal extends JFrame {
 		tf_57.setBackground(new Color(152, 148, 132));
 		tf_57.setForeground(Color.WHITE);
 		tf_57.setColumns(10);
-		tf_57.setBounds(504, 351, 56, 56);
+		tf_57.setBounds(768, 379, 56, 56);
 		contentPane.add(tf_57);
 		
 		tf_58 = new JTextField();
@@ -652,7 +654,7 @@ public class NerdleNormal extends JFrame {
 		tf_58.setBackground(new Color(152, 148, 132));
 		tf_58.setForeground(Color.WHITE);
 		tf_58.setColumns(10);
-		tf_58.setBounds(570, 351, 56, 56);
+		tf_58.setBounds(834, 379, 56, 56);
 		contentPane.add(tf_58);
 		
 		tf_61 = new JTextField();
@@ -666,7 +668,7 @@ public class NerdleNormal extends JFrame {
 		tf_61.setBackground(new Color(152, 148, 132));
 		tf_61.setForeground(Color.WHITE);
 		tf_61.setColumns(10);
-		tf_61.setBounds(108, 419, 56, 56);
+		tf_61.setBounds(372, 447, 56, 56);
 		contentPane.add(tf_61);
 		
 		tf_62 = new JTextField();
@@ -680,7 +682,7 @@ public class NerdleNormal extends JFrame {
 		tf_62.setBackground(new Color(152, 148, 132));
 		tf_62.setForeground(Color.WHITE);
 		tf_62.setColumns(10);
-		tf_62.setBounds(174, 419, 56, 56);
+		tf_62.setBounds(438, 447, 56, 56);
 		contentPane.add(tf_62);
 		
 		tf_63 = new JTextField();
@@ -694,7 +696,7 @@ public class NerdleNormal extends JFrame {
 		tf_63.setBackground(new Color(152, 148, 132));
 		tf_63.setForeground(Color.WHITE);
 		tf_63.setColumns(10);
-		tf_63.setBounds(240, 419, 56, 56);
+		tf_63.setBounds(504, 447, 56, 56);
 		contentPane.add(tf_63);
 		
 		tf_64 = new JTextField();
@@ -708,7 +710,7 @@ public class NerdleNormal extends JFrame {
 		tf_64.setBackground(new Color(152, 148, 132));
 		tf_64.setForeground(Color.WHITE);
 		tf_64.setColumns(10);
-		tf_64.setBounds(306, 419, 56, 56);
+		tf_64.setBounds(570, 447, 56, 56);
 		contentPane.add(tf_64);
 		
 		tf_65 = new JTextField();
@@ -722,7 +724,7 @@ public class NerdleNormal extends JFrame {
 		tf_65.setBackground(new Color(152, 148, 132));
 		tf_65.setForeground(Color.WHITE);
 		tf_65.setColumns(10);
-		tf_65.setBounds(372, 419, 56, 56);
+		tf_65.setBounds(636, 447, 56, 56);
 		contentPane.add(tf_65);
 		
 		tf_66 = new JTextField();
@@ -736,7 +738,7 @@ public class NerdleNormal extends JFrame {
 		tf_66.setBackground(new Color(152, 148, 132));
 		tf_66.setForeground(Color.WHITE);
 		tf_66.setColumns(10);
-		tf_66.setBounds(438, 419, 56, 56);
+		tf_66.setBounds(702, 447, 56, 56);
 		contentPane.add(tf_66);
 		
 		tf_67 = new JTextField();
@@ -750,7 +752,7 @@ public class NerdleNormal extends JFrame {
 		tf_67.setBackground(new Color(152, 148, 132));
 		tf_67.setForeground(Color.WHITE);
 		tf_67.setColumns(10);
-		tf_67.setBounds(504, 419, 56, 56);
+		tf_67.setBounds(768, 447, 56, 56);
 		contentPane.add(tf_67);
 		
 		tf_68 = new JTextField();
@@ -764,119 +766,131 @@ public class NerdleNormal extends JFrame {
 		tf_68.setBackground(new Color(152, 148, 132));
 		tf_68.setForeground(Color.WHITE);
 		tf_68.setColumns(10);
-		tf_68.setBounds(570, 419, 56, 56);
+		tf_68.setBounds(834, 447, 56, 56);
 		contentPane.add(tf_68);
 		
 		JButton btn2 = new JButton("2");
 		btn2.setFont(new Font("Arial", Font.BOLD, 18));
 		btn2.setForeground(Color.BLACK);
 		btn2.setBackground(new Color(226, 232, 240));
-		btn2.setBounds(133, 496, 50, 50);
+		btn2.setBounds(397, 524, 50, 50);
 		contentPane.add(btn2);
 		
 		JButton btn3 = new JButton("3");
 		btn3.setFont(new Font("Arial", Font.BOLD, 18));
 		btn3.setForeground(Color.BLACK);
 		btn3.setBackground(new Color(226, 232, 240));
-		btn3.setBounds(193, 496, 50, 50);
+		btn3.setBounds(457, 524, 50, 50);
 		contentPane.add(btn3);
 		
 		JButton btn4 = new JButton("4");
 		btn4.setFont(new Font("Arial", Font.BOLD, 18));
 		btn4.setForeground(Color.BLACK);
 		btn4.setBackground(new Color(226, 232, 240));
-		btn4.setBounds(253, 496, 50, 50);
+		btn4.setBounds(517, 524, 50, 50);
 		contentPane.add(btn4);
 		
 		JButton btn5 = new JButton("5");
 		btn5.setFont(new Font("Arial", Font.BOLD, 18));
 		btn5.setForeground(Color.BLACK);
 		btn5.setBackground(new Color(226, 232, 240));
-		btn5.setBounds(313, 496, 50, 50);
+		btn5.setBounds(577, 524, 50, 50);
 		contentPane.add(btn5);
 		
 		JButton btn6 = new JButton("6");
 		btn6.setFont(new Font("Arial", Font.BOLD, 18));
 		btn6.setForeground(Color.BLACK);
 		btn6.setBackground(new Color(226, 232, 240));
-		btn6.setBounds(374, 496, 50, 50);
+		btn6.setBounds(638, 524, 50, 50);
 		contentPane.add(btn6);
 		
 		JButton btn7 = new JButton("7");
 		btn7.setFont(new Font("Arial", Font.BOLD, 18));
 		btn7.setForeground(Color.BLACK);
 		btn7.setBackground(new Color(226, 232, 240));
-		btn7.setBounds(434, 496, 50, 50);
+		btn7.setBounds(698, 524, 50, 50);
 		contentPane.add(btn7);
 		
 		JButton btn8 = new JButton("8");
 		btn8.setFont(new Font("Arial", Font.BOLD, 18));
 		btn8.setForeground(Color.BLACK);
 		btn8.setBackground(new Color(226, 232, 240));
-		btn8.setBounds(494, 496, 50, 50);
+		btn8.setBounds(758, 524, 50, 50);
 		contentPane.add(btn8);
 		
 		JButton btn9 = new JButton("9");
 		btn9.setFont(new Font("Arial", Font.BOLD, 18));
 		btn9.setForeground(Color.BLACK);
 		btn9.setBackground(new Color(226, 232, 240));
-		btn9.setBounds(554, 496, 50, 50);
+		btn9.setBounds(818, 524, 50, 50);
 		contentPane.add(btn9);
 		
 		JButton btn0 = new JButton("0");
 		btn0.setFont(new Font("Arial", Font.BOLD, 18));
 		btn0.setForeground(Color.BLACK);
 		btn0.setBackground(new Color(226, 232, 240));
-		btn0.setBounds(613, 496, 50, 50);
+		btn0.setBounds(877, 524, 50, 50);
 		contentPane.add(btn0);
 		
 		JButton btnMas = new JButton("+");
 		btnMas.setFont(new Font("Arial", Font.BOLD, 20));
 		btnMas.setForeground(Color.BLACK);
 		btnMas.setBackground(new Color(226, 232, 240));
-		btnMas.setBounds(123, 563, 50, 50);
+		btnMas.setBounds(387, 591, 50, 50);
 		contentPane.add(btnMas);
 		
 		JButton btnMenos = new JButton("-");
 		btnMenos.setFont(new Font("Arial", Font.BOLD, 20));
 		btnMenos.setForeground(Color.BLACK);
 		btnMenos.setBackground(new Color(226, 232, 240));
-		btnMenos.setBounds(183, 563, 50, 50);
+		btnMenos.setBounds(447, 591, 50, 50);
 		contentPane.add(btnMenos);
 		
 		JButton btnPor = new JButton("*");
 		btnPor.setFont(new Font("Arial", Font.BOLD, 27));
 		btnPor.setForeground(Color.BLACK);
 		btnPor.setBackground(new Color(226, 232, 240));
-		btnPor.setBounds(243, 563, 50, 50);
+		btnPor.setBounds(507, 591, 50, 50);
 		contentPane.add(btnPor);
 		
 		JButton btnDiv = new JButton("/");
 		btnDiv.setFont(new Font("Arial", Font.BOLD, 20));
 		btnDiv.setForeground(Color.BLACK);
 		btnDiv.setBackground(new Color(226, 232, 240));
-		btnDiv.setBounds(303, 563, 50, 50);
+		btnDiv.setBounds(567, 591, 50, 50);
 		contentPane.add(btnDiv);
 		
 		JButton btnIgual = new JButton("=");
 		btnIgual.setFont(new Font("Arial", Font.BOLD, 20));
 		btnIgual.setForeground(Color.BLACK);
 		btnIgual.setBackground(new Color(226, 232, 240));
-		btnIgual.setBounds(363, 563, 50, 50);
+		btnIgual.setBounds(627, 591, 50, 50);
 		contentPane.add(btnIgual);
 		
 		JButton btnEnter = new JButton("Enter");
 		btnEnter.setFont(new Font("Arial", Font.BOLD, 18));
 		btnEnter.setForeground(Color.BLACK);
 		btnEnter.setBackground(new Color(226, 232, 240));
-		btnEnter.setBounds(424, 563, 90, 50);
+		btnEnter.setBounds(688, 591, 90, 50);
 		contentPane.add(btnEnter);
 		
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.setFont(new Font("Arial", Font.BOLD, 18));
 		btnDelete.setForeground(Color.BLACK);
 		btnDelete.setBackground(new Color(226, 232, 240));
-		btnDelete.setBounds(526, 564, 100, 50);
+		btnDelete.setBounds(790, 592, 100, 50);
 		contentPane.add(btnDelete);
+		
+		lblNewLabel = new JLabel("MathMentor");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
+		lblNewLabel.setBounds(10, 11, 1248, 84);
+		contentPane.add(lblNewLabel);
+		
+		btnNewButton = new JButton("<--");
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBackground(new Color(100, 182, 172));
+		btnNewButton.setBounds(10, 11, 50, 50);
+		contentPane.add(btnNewButton);
 	}
 }

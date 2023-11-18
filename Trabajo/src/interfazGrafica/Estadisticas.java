@@ -11,7 +11,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
-public class Juegos extends JFrame {
+public class Estadisticas extends JFrame {
 
 	private JPanel contentPane;
 
@@ -22,7 +22,7 @@ public class Juegos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Juegos frame = new Juegos();
+					Estadisticas frame = new Estadisticas();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +34,7 @@ public class Juegos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Juegos() {
+	public Estadisticas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
@@ -50,37 +50,10 @@ public class Juegos extends JFrame {
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnNerdle = new JButton("Nerdle");
-		btnNerdle.setForeground(Color.WHITE);
-		btnNerdle.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnNerdle.setBackground(new Color(100, 182, 172));
-		btnNerdle.setBounds(428, 258, 300, 50);
-		contentPane.add(btnNerdle);
-		
-		JButton btnJuegos = new JButton("...");
-		btnJuegos.setForeground(Color.WHITE);
-		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnJuegos.setBackground(new Color(100, 182, 172));
-		btnJuegos.setBounds(428, 350, 300, 50);
-		contentPane.add(btnJuegos);
-		
 		JButton btnNewButton = new JButton("<--");
-		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(new Color(100, 182, 172));
 		btnNewButton.setBounds(10, 11, 50, 50);
 		contentPane.add(btnNewButton);
-		
-		JButton btnE = new JButton("e");
-		btnE.setForeground(Color.WHITE);
-		btnE.setBackground(new Color(100, 182, 172));
-		btnE.setBounds(783, 258, 50, 50);
-		contentPane.add(btnE);
-		
-		JButton btnNewButton_2 = new JButton("<--");
-		btnNewButton_2.setForeground(Color.WHITE);
-		btnNewButton_2.setBackground(new Color(100, 182, 172));
-		btnNewButton_2.setBounds(783, 350, 50, 50);
-		contentPane.add(btnNewButton_2);
 	}
-
 }
