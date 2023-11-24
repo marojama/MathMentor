@@ -32,9 +32,11 @@ public class AtenderPeticion extends Thread {
 				if(existeUsuario) {
 					this.usuario=usuario;
 					bout.write("Inicio sesion correcto\n");
+					bout.flush();
 				}
 				else {
 					bout.write("Error usuario\n");
+					bout.flush();
 				}
 			}while(!existeUsuario);
 			
@@ -65,10 +67,10 @@ public class AtenderPeticion extends Thread {
 			return true;
 		}
 		else{
-			try {
-				BufferedReader bfich=new BufferedReader(new InputStreamReader(new FileInputStream("Usuarios.txt")));
+			try(BufferedReader bfich=new BufferedReader(new InputStreamReader(new FileInputStream("Usuarios.txt")));) {
 				String leido=bfich.readLine();
 				while(leido!=null) {
+					System.out.println(leido);
 					if(leido.equals(usuario)) {
 						return true;
 					}

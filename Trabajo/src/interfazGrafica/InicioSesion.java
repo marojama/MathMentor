@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import principal.Principal;
 import principal.Usuarios;
 
 import javax.swing.JLabel;
@@ -24,22 +25,6 @@ public class InicioSesion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InicioSesion frame = new InicioSesion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -118,7 +103,7 @@ public class InicioSesion extends JFrame {
 			pr.setVisible(true);
 			this.dispose();
 		}
-		else if(Usuarios.existeUsuario(usuario)) {
+		else if(Principal.existeUsuario(usuario)) {
 			ExamenesYJuegos ej=new ExamenesYJuegos(usuario);
 			ej.setVisible(true);
 			this.dispose();
