@@ -37,7 +37,7 @@ public class Principal {
 		try {
 			BufferedReader bin=new BufferedReader(new InputStreamReader(s.getInputStream()));
 			BufferedWriter bout=new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-			
+			bout.write("Iniciar sesion\n");
 			bout.write(usuario+"\n");
 			bout.flush();
 			String respuesta=bin.readLine();

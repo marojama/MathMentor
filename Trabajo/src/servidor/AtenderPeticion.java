@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -25,29 +26,29 @@ public class AtenderPeticion extends Thread {
 			BufferedReader bin=new BufferedReader(new InputStreamReader(s.getInputStream()));
 			BufferedWriter bout=new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
 			
-			boolean existeUsuario=false;
-			do {
-				String usuario=bin.readLine();
-				existeUsuario=comprobarUsuario(usuario);
-				if(existeUsuario) {
-					this.usuario=usuario;
-					bout.write("Inicio sesion correcto\n");
-					bout.flush();
-				}
-				else {
-					bout.write("Error usuario\n");
-					bout.flush();
-				}
-			}while(!existeUsuario);
-			
 			String opcion=bin.readLine();
 			
-			if(opcion.equals("Nerdle")) {
-				
-			}else if(opcion.equals("Examen")) {
-				
-			}else if(opcion.equals("Usuarios")) {
-				
+			while(!opcion.equals("Salir")) {
+				if(opcion.equals("Iniciar sesion")) {
+					this.usuario=bin.readLine();
+					boolean existeUsuario=comprobarUsuario(usuario);
+					if(existeUsuario) {
+						this.usuario=usuario;
+						bout.write("Inicio sesion correcto\n");
+						bout.flush();
+					}
+					else {
+						bout.write("Error usuario\n");
+						bout.flush();
+					}
+				}else if(opcion.equals("Nerdle")) {
+					
+				}else if(opcion.equals("Examen")) {
+					
+				}else if(opcion.equals("Usuarios")) {
+					
+				}
+				opcion=bin.readLine();
 			}
 			
 			
@@ -67,7 +68,7 @@ public class AtenderPeticion extends Thread {
 			return true;
 		}
 		else{
-			try(BufferedReader bfich=new BufferedReader(new InputStreamReader(new FileInputStream("Usuarios.txt")));) {
+			try(BufferedReader bfich=new BufferedReader(new FileReader("Usuarios.txt"));) {
 				String leido=bfich.readLine();
 				while(leido!=null) {
 					System.out.println(leido);
@@ -76,9 +77,6 @@ public class AtenderPeticion extends Thread {
 					}
 					leido=bfich.readLine();
 				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
