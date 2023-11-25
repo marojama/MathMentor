@@ -5,8 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import principal.Principal;
+
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
@@ -54,6 +59,30 @@ public class PantallaProfesora extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnGestionarUsuarios = new JButton("Gestionar usuarios");
+		btnGestionarUsuarios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String usuario=JOptionPane.showInputDialog("Introduce un usuario");
+				if(usuario.equals("")) {
+					JOptionPane.showMessageDialog(PantallaProfesora.this, "El usuario no puede ser vacio", "Error usuario", JOptionPane.ERROR_MESSAGE);
+				}else{
+					boolean existe=Principal.existeUsuario(usuario);
+					if(existe) {
+						int opcion=JOptionPane.showOptionDialog(PantallaProfesora.this, "El usuario existe, ¿quieres borrarlo?","Borrar usuario",JOptionPane.YES_NO_OPTION,
+	                            JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si", "No"},"Si");
+						if(opcion==0) {
+							Principal.borrarUsuario(usuario);
+						}
+					}else {
+						int opcion=JOptionPane.showOptionDialog(PantallaProfesora.this, "El usuario no existe, ¿quieres crearlo?","Crear usuario",JOptionPane.YES_NO_OPTION,
+	                            JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si", "No"},"Si");
+						if(opcion==0) {
+							Principal.crearUsuario(usuario);
+						}
+					}
+				}
+			}
+		});
 		btnGestionarUsuarios.setForeground(Color.WHITE);
 		btnGestionarUsuarios.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnGestionarUsuarios.setBackground(new Color(100, 182, 172));

@@ -3,9 +3,11 @@ package servidor;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -19,6 +21,16 @@ public class AtenderPeticion extends Thread {
 	public AtenderPeticion(Socket s) {
 		this.s = s;
 		this.usuario="";
+		//Almacen de usuarios
+		File f=new File("Usuarios.txt");
+		if(!f.exists()) {
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void run() {
@@ -45,8 +57,22 @@ public class AtenderPeticion extends Thread {
 					
 				}else if(opcion.equals("Examen")) {
 					
-				}else if(opcion.equals("Usuarios")) {
-					
+				}else if(opcion.equals("Gestionar usuarios")) {
+					opcion=bin.readLine();
+					if(opcion.equals("Borrar usuario")) {
+						boolean borrado=borrarUsuario(bin.readLine());
+						if(borrado) {
+							bout.write("Borrado correcto\n");
+							bout.flush();
+						}
+					}
+					else if(opcion.equals("Crear usuario")) {
+						boolean creado=crearUsuario(bin.readLine());
+						if(creado) {
+							bout.write("Creado correcto\n");
+							bout.flush();
+						}
+					}
 				}
 				opcion=bin.readLine();
 			}
@@ -63,16 +89,15 @@ public class AtenderPeticion extends Thread {
 		}
 	}
 	
-	public boolean comprobarUsuario(String usuario) {
-		if(usuario.equals("marojamaProfe") || usuario.equals("invitado")) {
+	public boolean comprobarUsuario(String u) {
+		if(u.equals("marojamaProfe") || u.equals("invitado")) {
 			return true;
 		}
 		else{
 			try(BufferedReader bfich=new BufferedReader(new FileReader("Usuarios.txt"));) {
 				String leido=bfich.readLine();
 				while(leido!=null) {
-					System.out.println(leido);
-					if(leido.equals(usuario)) {
+					if(leido.equals(u)) {
 						return true;
 					}
 					leido=bfich.readLine();
@@ -83,6 +108,50 @@ public class AtenderPeticion extends Thread {
 			}
 		}
 		return false;
+	}
+	
+	public boolean borrarUsuario(String u) {
+		File original,temporal;
+		boolean borrado=false;
+		
+		try(BufferedReader bfich=new BufferedReader(new FileReader("Usuarios.txt"));
+		BufferedWriter btemp=new BufferedWriter(new FileWriter("copia.tmp"))) {
+			String leido=bfich.readLine();
+			while(leido!=null) {
+				if(!leido.equals(u)) {
+					btemp.write(leido);
+					btemp.newLine();
+				}
+				else {
+					borrado=true;
+				}
+				leido=bfich.readLine();
+			}
+			bfich.close();
+			btemp.close();
+			original=new File("Usuarios.txt");
+			original.delete();
+			temporal=new File("copia.tmp");
+			temporal.renameTo(original);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return borrado;
+	}
+	
+	public boolean crearUsuario(String u) {
+		boolean creado=false;
+		
+		try(BufferedWriter bfich=new BufferedWriter (new FileWriter ("Usuarios.txt",true))) {
+			bfich.write(u);
+			bfich.newLine();
+			creado=true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return creado;
 	}
 
 }
