@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Iterator;
 
 public class AtenderPeticion extends Thread {
 
@@ -124,6 +125,7 @@ public class AtenderPeticion extends Thread {
 				}
 				else {
 					borrado=true;
+					borrarCarpetaExamenes(u);
 				}
 				leido=bfich.readLine();
 			}
@@ -140,12 +142,26 @@ public class AtenderPeticion extends Thread {
 		return borrado;
 	}
 	
+	public void borrarCarpetaExamenes(String u) {
+		File carpeta=new File(u);
+		boolean borrado=carpeta.delete();
+		//Tiene examenes dentro, no se puede borrar
+		if(!borrado) {
+			for (File f : carpeta.listFiles()) {
+				f.delete();
+			}
+			carpeta.delete();
+		}
+	}
+	
 	public boolean crearUsuario(String u) {
 		boolean creado=false;
 		
 		try(BufferedWriter bfich=new BufferedWriter (new FileWriter ("Usuarios.txt",true))) {
 			bfich.write(u);
 			bfich.newLine();
+			File carpetaExamenes=new File(u);
+			carpetaExamenes.mkdir();
 			creado=true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -153,5 +169,7 @@ public class AtenderPeticion extends Thread {
 		}
 		return creado;
 	}
+	
+	
 
 }
