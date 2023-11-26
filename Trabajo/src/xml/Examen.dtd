@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT examen (tema,fecha,preguntas)>
+<!ATTLIST examen
+	id ID #REQUIRED
+	ACTIVO (true|false) #REQUIRED>
+<!ELEMENT tema (#PCDATA)>
+<!ELEMENT fecha (#PCDATA)>
+<!ELEMENT preguntas (pregunta+)>
+<!ELEMENT pregunta (enunciado,respuesta+)>
+<!ELEMENT enunciado (#PCDATA)>
+<!ELEMENT respuesta (#PCDATA)>

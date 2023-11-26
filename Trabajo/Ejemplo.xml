@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<examen activo="true" id="1">
+    <tema>tema 1</tema>
+    <fecha>2023-11-26T00:00:00+01:00</fecha>
+    <preguntas>
+        <pregunta>
+            <enunciado>Que tal estas?</enunciado>
+            <respuesta>Bien</respuesta>
+            <respuesta>De puta madre</respuesta>
+            <respuesta>Tu puta madre</respuesta>
+        </pregunta>
+        <pregunta>
+            <enunciado>Que tal estas?</enunciado>
+            <respuesta>Bien</respuesta>
+            <respuesta>De puta madre</respuesta>
+            <respuesta>Tu puta madre</respuesta>
+        </pregunta>
+        <pregunta>
+            <enunciado>Que tal estas?</enunciado>
+            <respuesta>Bien</respuesta>
+            <respuesta>De puta madre</respuesta>
+            <respuesta>Tu puta madre</respuesta>
+        </pregunta>
+        <pregunta>
+            <enunciado>Que tal estas?</enunciado>
+            <respuesta>Me quiero morir</respuesta>
+        </pregunta>
+    </preguntas>
+</examen>
