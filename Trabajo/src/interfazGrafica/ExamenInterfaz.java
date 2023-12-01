@@ -5,7 +5,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +34,7 @@ public class ExamenInterfaz extends JFrame {
 	JLabel lblPregunta;
 	JPanel panel;
 	private int correctas=0;
+	private String nombreFich;
 	/**
 	 * Launch the application.
 	 */
@@ -53,6 +56,7 @@ public class ExamenInterfaz extends JFrame {
 	 */
 	public ExamenInterfaz(String seleccion, String usuario) {
 		this.usuario=usuario;
+		this.nombreFich=seleccion;
 		this.examen=Principal.pedirExamen(seleccion);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
@@ -84,11 +88,13 @@ public class ExamenInterfaz extends JFrame {
 		panel.add(lblPregunta);
 		
 		respuestas=new JRadioButton[numRespuestas];
+		ButtonGroup grupo=new ButtonGroup();
 		for(int i=0;i<numRespuestas;i++) {
 			respuestas[i]=new JRadioButton(examen.getPreguntas().get(0).getRespuestas().get(i));
 			respuestas[i].setFont(new Font("Tahoma", Font.PLAIN, 15));
 			respuestas[i].setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(respuestas[i]);
+			grupo.add(respuestas[i]);
 		}
 		this.actualPregunta=0;
 		
@@ -129,6 +135,9 @@ public class ExamenInterfaz extends JFrame {
 					if(btnComprobarSiguiente.getText().equals("Finalizar")) {
 						JOptionPane.showMessageDialog(panel, "¡Enhorabuena! Has terminado. Tu resultado final ha sido de "+correctas+" preguntas correctas de "
 					+examen.getPreguntas().size()+". Tus resultados se han enviado a tu profe", "Fin examen", JOptionPane.OK_OPTION);
+						examen.setNumCorrectas(correctas);
+						examen.setFecha(LocalDateTime.now());
+						Principal.enviarExamen(examen,nombreFich,usuario);
 					}
 					else {
 						pasarSiguiente();
@@ -160,6 +169,7 @@ public class ExamenInterfaz extends JFrame {
 				}
 				else {
 					respuestas[i].setBackground(Color.RED);
+					examen.getPreguntas().get(actualPregunta).setContestada(i);
 				}
 			}
 		}
@@ -184,11 +194,13 @@ public class ExamenInterfaz extends JFrame {
 			panel.remove(respuestas[i]);
 		}
 		respuestas=new JRadioButton[numRespuestas];
+		ButtonGroup grupo=new ButtonGroup();
 		for(int i=0;i<numRespuestas;i++) {
 			respuestas[i]=new JRadioButton(examen.getPreguntas().get(this.actualPregunta).getRespuestas().get(i));
 			respuestas[i].setFont(new Font("Tahoma", Font.PLAIN, 15));
 			respuestas[i].setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(respuestas[i]);
+			grupo.add(respuestas[i]);
 		}
 		btnComprobarSiguiente.setText("Comprobar");
 		this.comprobado=false;

@@ -108,6 +108,10 @@ public class Juegos extends JFrame {
 					new ExamenesYJuegos().setVisible(true);
 					dispose();
 				}
+				else if(usuario.equals("Profe")){
+					new PantallaProfesora().setVisible(true);
+					dispose();
+				}
 				else {
 					new ExamenesYJuegos(usuario).setVisible(true);
 					dispose();

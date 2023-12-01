@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<examen activo="true" id="1">
+	<tema>tema 1</tema>
+	<fecha>2023-12-01T22:27:01.556920700</fecha>
+	<numCorrectas>3</numCorrectas>
+	<preguntas>
+		<pregunta contestada="0" correcta="0">
+			<enunciado>Que tal estas? Pregunta 1</enunciado>
+			<respuesta>Bien</respuesta>
+			<respuesta>De puta madre</respuesta>
+			<respuesta>Tu puta madre</respuesta>
+		</pregunta>
+		<pregunta contestada="0" correcta="1">
+			<enunciado>Que tal estas? Pregunta 2</enunciado>
+			<respuesta>Bien</respuesta>
+			<respuesta>De puta madre</respuesta>
+			<respuesta>Tu puta madre</respuesta>
+			<respuesta>Estoy haciendo pruebas</respuesta>
+			<respuesta>Y creo que va bien</respuesta>
+		</pregunta>
+		<pregunta contestada="1" correcta="2">
+			<enunciado>Que tal estas?</enunciado>
+			<respuesta>Bien</respuesta>
+			<respuesta>De puta madre</respuesta>
+			<respuesta>Sergio te quiero</respuesta>
+			<respuesta>Tu puta madre</respuesta>
+		</pregunta>
+		<pregunta contestada="0" correcta="0">
+			<enunciado>Que tal estas?</enunciado>
+			<respuesta>Me quiero morir</respuesta>
+		</pregunta>
+	</preguntas>
+</examen>

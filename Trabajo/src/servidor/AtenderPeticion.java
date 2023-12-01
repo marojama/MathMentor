@@ -21,10 +21,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -114,6 +121,11 @@ public class AtenderPeticion extends Thread {
 						}
 					}
 				}
+				else if(opcion.equals("Examen hecho")) {
+					String nomFich=is.readLine();
+					String usuario=is.readLine();
+					recibirExamen(nomFich,usuario);
+				}
 				opcion=is.readLine();
 			}
 			
@@ -129,6 +141,70 @@ public class AtenderPeticion extends Thread {
 		}
 	}
 	
+	private void recibirExamen(String nomFich, String usuario2) {
+		try {
+			Examen ex=(Examen) is.readObject();
+			
+			DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+			DocumentBuilder db=dbf.newDocumentBuilder();
+			Document doc=db.newDocument();
+			
+			Element examen=doc.createElement("examen");
+			examen.setAttribute("activo", String.valueOf(ex.isActivo()));
+			examen.setAttribute("id", String.valueOf(ex.getId()));
+			
+			Element tema=doc.createElement("tema");
+			tema.appendChild(doc.createTextNode(ex.getTema()));
+			examen.appendChild(tema);
+			
+			Element fecha=doc.createElement("fecha");
+			fecha.appendChild(doc.createTextNode(ex.getFecha().toString()));
+			examen.appendChild(fecha);
+			
+			Element numCorrectas=doc.createElement("numCorrectas");
+			numCorrectas.appendChild(doc.createTextNode(String.valueOf(ex.getNumCorrectas())));
+			examen.appendChild(numCorrectas);
+			
+			Element preguntas=doc.createElement("preguntas");
+			
+			List<Pregunta> preg=ex.getPreguntas();
+			for(int i=0,n=preg.size();i<n;i++) {
+				Element pregunta=doc.createElement("pregunta");
+				pregunta.setAttribute("correcta", String.valueOf(preg.get(i).getCorrecta()));
+				pregunta.setAttribute("contestada", String.valueOf(preg.get(i).getContestada()));
+				
+				Element enunciado=doc.createElement("enunciado");
+				enunciado.appendChild(doc.createTextNode(preg.get(i).getEnunciado()));
+				pregunta.appendChild(enunciado);
+				
+				List<String> respuestas=preg.get(i).getRespuestas();
+				for(int j=0,m=respuestas.size();j<m;j++) {
+					Element respuesta=doc.createElement("respuesta");
+					respuesta.appendChild(doc.createTextNode(respuestas.get(j)));
+					pregunta.appendChild(respuesta);
+				}
+				preguntas.appendChild(pregunta);
+			}
+			
+			examen.appendChild(preguntas);
+			
+			doc.appendChild(examen);
+			
+			TransformerFactory tf=TransformerFactory.newInstance();
+			Transformer t=tf.newTransformer();
+			DOMSource source=new DOMSource(doc);
+			File f=new File("./"+usuario2+"/"+nomFich.split(".xml")[0]+"Resuelto.xml");
+			if(!f.exists()) {
+				f.createNewFile();
+			}
+			StreamResult result=new StreamResult(f);
+			t.transform(source, result);
+		} catch (ClassNotFoundException | IOException | ParserConfigurationException | TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private Examen devolverExam(String usuario2, String e) {
 		
 		try {

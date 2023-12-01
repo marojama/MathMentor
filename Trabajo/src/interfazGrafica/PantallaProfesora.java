@@ -144,7 +144,7 @@ public class PantallaProfesora extends JFrame {
 	}
 	
 	private void cambiarPantallaJuegos() {
-		Juegos j=new Juegos();
+		Juegos j=new Juegos("Profe");
 		j.setVisible(true);
 		this.dispose();
 	}

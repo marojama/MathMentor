@@ -138,4 +138,17 @@ public class Principal {
 
 		return null;
 	}
+
+	public static void enviarExamen(Examen examen, String nombreFich, String usuario) {
+		try {
+			os.writeBytes("Examen hecho\n");
+			os.writeBytes(nombreFich+"\n");
+			os.writeBytes(usuario+"\n");
+			os.writeObject(examen);
+			os.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -12,6 +12,7 @@ public class Pregunta implements Serializable{
 	private static final long serialVersionUID = 5674492430205039008L;
 	private String enunciado;
 	private int correcta;
+	private int contestada;
 	private List<String> respuestas;
 	
 	public Pregunta() {
@@ -48,4 +49,13 @@ public class Pregunta implements Serializable{
 	public void setCorrecta(int correcta) {
 		this.correcta = correcta;
 	}
+
+	public int getContestada() {
+		return contestada;
+	}
+
+	public void setContestada(int contestada) {
+		this.contestada = contestada;
+	}	
+	
 }
