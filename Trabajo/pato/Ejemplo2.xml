@@ -3,25 +3,25 @@
     <tema>tema 1</tema>
     <fecha>2023-11-26T00:00:00+01:00</fecha>
     <preguntas>
-        <pregunta>
+        <pregunta correcta="0">
             <enunciado>Que tal estas?</enunciado>
             <respuesta>Bien</respuesta>
             <respuesta>De puta madre</respuesta>
             <respuesta>Tu puta madre</respuesta>
         </pregunta>
-        <pregunta>
+        <pregunta correcta="1">
             <enunciado>Que tal estas?</enunciado>
             <respuesta>Bien</respuesta>
             <respuesta>De puta madre</respuesta>
             <respuesta>Tu puta madre</respuesta>
         </pregunta>
-        <pregunta>
+        <pregunta correcta="2">
             <enunciado>Que tal estas?</enunciado>
             <respuesta>Bien</respuesta>
             <respuesta>De puta madre</respuesta>
             <respuesta>Tu puta madre</respuesta>
         </pregunta>
-        <pregunta>
+        <pregunta correcta="0">
             <enunciado>Que tal estas?</enunciado>
             <respuesta>Me quiero morir</respuesta>
         </pregunta>

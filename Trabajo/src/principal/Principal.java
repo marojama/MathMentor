@@ -128,7 +128,6 @@ public class Principal {
 			os.writeBytes("Examen\n");
 			os.writeBytes(seleccion+"\n");
 			os.flush();
-			
 			Examen Exam= (Examen) is.readObject();
 			return Exam;
 			

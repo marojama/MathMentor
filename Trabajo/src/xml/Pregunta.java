@@ -6,17 +6,22 @@ import java.util.List;
 
 public class Pregunta implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5674492430205039008L;
 	private String enunciado;
-	
+	private int correcta;
 	private List<String> respuestas;
 	
 	public Pregunta() {
 		this.respuestas=new ArrayList<String>();
 	}
 
-	public Pregunta(String enunciado, ArrayList<String> respuestas) {
+	public Pregunta(String enunciado, ArrayList<String> respuestas, int correcta) {
 		this.enunciado = enunciado;
 		this.respuestas = respuestas;
+		this.correcta=correcta;
 	}
 
 	public String getEnunciado() {
@@ -35,6 +40,12 @@ public class Pregunta implements Serializable{
 	public void setRespuestas(List<String> respuestas) {
 		this.respuestas = respuestas;
 	}
-	
-	
+
+	public int getCorrecta() {
+		return correcta;
+	}
+
+	public void setCorrecta(int correcta) {
+		this.correcta = correcta;
+	}
 }

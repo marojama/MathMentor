@@ -69,7 +69,7 @@ public class ExamenesYJuegos extends JFrame {
 				System.out.println("Me han hecho clic");
 				String[] listaExamenes=Principal.nombreExamenes();
 				String seleccion=(String) JOptionPane.showInputDialog(ExamenesYJuegos.this, "Selecciona el examen a realizar", "Selección examen", JOptionPane.QUESTION_MESSAGE, null, listaExamenes, listaExamenes[0]);
-				new ExamenesInterfaz(seleccion,usuario).setVisible(true);
+				new ExamenInterfaz(seleccion,usuario).setVisible(true);
 				ExamenesYJuegos.this.dispose();
 			}
 		});
@@ -140,3 +140,4 @@ public class ExamenesYJuegos extends JFrame {
 	}
 
 }
+

@@ -139,18 +139,14 @@ public class AtenderPeticion extends Thread {
 			
 			Examen examen=new Examen();
 			ArrayList<Pregunta> preguntas=new ArrayList<>();
-			System.out.println("hola");
 			//Elemento <examen>
 			Element raiz=doc.getDocumentElement();
 			examen.setActivo(Boolean.parseBoolean(raiz.getAttribute("activo")));
-			System.out.println(examen.isActivo());
 			examen.setId(Integer.parseInt(raiz.getAttribute("id")));
-			System.out.println(examen.getId());
 			//DateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 			//examen.setFecha(format.parse(raiz.getElementsByTagName("fecha").item(0).getTextContent()));
 			//System.out.println(examen.getFecha().toString());
 			examen.setTema(raiz.getElementsByTagName("tema").item(0).getTextContent());
-			System.out.println(examen.getTema());
 			NodeList p=raiz.getElementsByTagName("pregunta");
 			for(int i=0;i<p.getLength();i++) {
 				Pregunta preg=new Pregunta();
@@ -161,11 +157,11 @@ public class AtenderPeticion extends Thread {
 					respuestas.add(resp.item(j).getTextContent());
 				}
 				preg.setRespuestas(respuestas);
+				preg.setCorrecta(Integer.parseInt(((Element) p.item(i)).getAttribute("correcta")));
+				System.out.println(preg.getCorrecta());
 				preguntas.add(preg);
 			}
-			System.out.println("hola2");
 			examen.setPreguntas(preguntas);
-			System.out.println(examen.toString());
 			return examen;
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block

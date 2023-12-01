@@ -7,5 +7,7 @@
 <!ELEMENT fecha (#PCDATA)>
 <!ELEMENT preguntas (pregunta+)>
 <!ELEMENT pregunta (enunciado,respuesta+)>
+<!ATTLIST pregunta
+	correcta CDATA #REQUIRED>
 <!ELEMENT enunciado (#PCDATA)>
 <!ELEMENT respuesta (#PCDATA)>
