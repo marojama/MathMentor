@@ -135,7 +135,7 @@ public class AtenderPeticion extends Thread {
 			
 			Examen examen=new Examen();
 			ArrayList<Pregunta> preguntas=new ArrayList<>();
-			
+			System.out.println("hola");
 			//Elemento <examen>
 			Element raiz=doc.getDocumentElement();
 			examen.setActivo(Boolean.parseBoolean(raiz.getAttribute("activo")));
@@ -154,8 +154,9 @@ public class AtenderPeticion extends Thread {
 				preg.setRespuestas(respuestas);
 				preguntas.add(preg);
 			}
+			System.out.println("hola2");
 			examen.setPreguntas(preguntas);
-			
+			System.out.println(examen.toString());
 			return examen;
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block

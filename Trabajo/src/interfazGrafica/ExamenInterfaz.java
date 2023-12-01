@@ -2,6 +2,7 @@ package interfazGrafica;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -16,19 +17,39 @@ import javax.swing.JRadioButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ExamenInterfaz extends JFrame{
 
 	private JFrame frame;
 	private Examen examen;
+	private String usuario;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ExamenInterfaz frame = new ExamenInterfaz("Ejemplo.xml","");
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
 	 * @param seleccion 
 	 * @param seleccion2 
 	 */
-	public ExamenInterfaz(String seleccion) {
+	public ExamenInterfaz(String seleccion, String usuario) {
 		this.examen=Principal.pedirExamen(seleccion);
+		this.usuario=usuario;
 		initialize();
 	}
 
@@ -47,18 +68,6 @@ public class ExamenInterfaz extends JFrame{
 		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		frame.getContentPane().add(lblNewLabel);
-		
-		JLabel lblPlanta1 = new JLabel();
-		lblPlanta1.setBounds(89, 0, 216, 510);
-		frame.getContentPane().add(lblPlanta1);
-		
-		JLabel lblPlanta2 = new JLabel();
-		lblPlanta2.setBounds(985, 480, 200, 205);
-		frame.getContentPane().add(lblPlanta2);
-		
-		JLabel lblAtras = new JLabel("");
-		lblAtras.setBounds(10, 11, 50, 50);
-		frame.getContentPane().add(lblAtras);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(330, 106, 609, 408);
@@ -117,5 +126,31 @@ public class ExamenInterfaz extends JFrame{
 		gbc_rdbtnNewRadioButton.gridx = 0;
 		gbc_rdbtnNewRadioButton.gridy = 4;
 		panel.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
+		
+		ImageIcon imagen1=new ImageIcon("./planta1.png");
+		ImageIcon imagen2=new ImageIcon("./planta2.png");
+		ImageIcon imagen3=new ImageIcon("./flechita.png");
+		
+		JLabel lblPlanta1 = new JLabel();
+		lblPlanta1.setIcon(imagen1);
+		lblPlanta1.setBounds(89, 0, 216, 510);
+		panel.add(lblPlanta1);
+		
+		JLabel lblPlanta2 = new JLabel();
+		lblPlanta2.setIcon(imagen2);
+		lblPlanta2.setBounds(985, 480, 200, 205);
+		panel.add(lblPlanta2);
+		
+		JLabel lblAtras = new JLabel("");
+		lblAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ExamenesYJuegos(usuario).setVisible(true);
+				dispose();
+			}
+		});
+		lblAtras.setIcon(imagen3);
+		lblAtras.setBounds(10, 11, 50, 50);
+		panel.add(lblAtras);
 	}
 }

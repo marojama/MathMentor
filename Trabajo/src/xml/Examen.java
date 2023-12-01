@@ -72,5 +72,13 @@ public class Examen implements Serializable{
 	public void setPreguntas(List<Pregunta> preguntas) {
 		this.preguntas = preguntas;
 	}
+
+	@Override
+	public String toString() {
+		return "Examen [id=" + id + ", activo=" + activo + ", tema=" + tema + ", fecha=" + fecha + ", preguntas="
+				+ preguntas + ", getId()=" + getId() + ", isActivo()=" + isActivo() + ", getTema()=" + getTema()
+				+ ", getFecha()=" + getFecha() + ", getPreguntas()=" + getPreguntas() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
 	
 }
