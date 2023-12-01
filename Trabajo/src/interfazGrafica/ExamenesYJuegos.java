@@ -5,14 +5,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import principal.Principal;
+
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class ExamenesYJuegos extends JFrame {
 
@@ -57,6 +63,16 @@ public class ExamenesYJuegos extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		btnExamenes = new JButton("Examenes");
+		btnExamenes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Me han hecho clic");
+				String[] listaExamenes=Principal.nombreExamenes();
+				String seleccion=(String) JOptionPane.showInputDialog(ExamenesYJuegos.this, "Selecciona el examen a realizar", "Selección examen", JOptionPane.QUESTION_MESSAGE, null, listaExamenes, listaExamenes[0]);
+				new ExamenInterfaz(seleccion).setVisible(true);
+				ExamenesYJuegos.this.dispose();
+			}
+		});
 		btnExamenes.setForeground(Color.WHITE);
 		btnExamenes.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnExamenes.setBackground(new Color(100, 182, 172));

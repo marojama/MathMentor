@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-
 public class Pregunta implements Serializable{
 
 	private String enunciado;
@@ -29,7 +27,7 @@ public class Pregunta implements Serializable{
 		this.enunciado = enunciado;
 	}
 
-	@XmlElement(name="respuesta")
+	//@XmlElement(name="respuesta")
 	public List<String> getRespuestas() {
 		return respuestas;
 	}

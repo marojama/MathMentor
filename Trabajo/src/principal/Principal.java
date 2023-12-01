@@ -4,8 +4,11 @@ import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.Date;
@@ -13,9 +16,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import interfazGrafica.InicioSesion;
 import interfazGrafica.PantallaProfesora;
@@ -25,35 +25,15 @@ import xml.Pregunta;
 public class Principal {
 
 	private static Socket s;
+	private static ObjectInputStream is;
+	private static ObjectOutputStream os;
 
 	public static void main(String[] args) {
 
-		ArrayList<String> r = new ArrayList<String>();
-		ArrayList<String> r1 = new ArrayList<String>();
-		r.add("Bien");
-		r.add("De puta madre");
-		r.add("Tu puta madre");
-		Pregunta p = new Pregunta("Que tal estas?", r);
-		r1.add("Me quiero morir");
-		Pregunta p2 = new Pregunta("Que tal estas?", r1);
-		ArrayList<Pregunta> ps = new ArrayList<>();
-		ps.add(p);
-		ps.add(p);
-		ps.add(p);
-		ps.add(p2);
-		Examen e = new Examen(1, true, "tema 1", Date.valueOf(LocalDate.now()), ps);
-
-		try {
-			JAXBContext context = JAXBContext.newInstance(Examen.class);
-			Marshaller m = context.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			m.marshal(e, new File("Ejemplo.xml"));
-		} catch (JAXBException ñ) {
-			ñ.printStackTrace();
-		}
-
 		try {
 			s = new Socket("localhost", 55555);
+			is=new ObjectInputStream(s.getInputStream());
+			os=new ObjectOutputStream(s.getOutputStream());
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -72,12 +52,10 @@ public class Principal {
 
 	public static boolean existeUsuario(String usuario) {
 		try {
-			BufferedReader bin = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-			bout.write("Iniciar sesion\n");
-			bout.write(usuario + "\n");
-			bout.flush();
-			String respuesta = bin.readLine();
+			os.writeBytes("Iniciar sesion\n");
+			os.writeBytes(usuario + "\n");
+			os.flush();
+			String respuesta = is.readLine();
 			if (respuesta.equals("Inicio sesion correcto")) {
 				return true;
 			} else {
@@ -94,13 +72,11 @@ public class Principal {
 
 	public static boolean borrarUsuario(String usuario) {
 		try {
-			BufferedReader bin = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-			bout.write("Gestionar usuarios\n");
-			bout.write("Borrar usuario\n");
-			bout.write(usuario + "\n");
-			bout.flush();
-			String respuesta = bin.readLine();
+			os.writeBytes("Gestionar usuarios\n");
+			os.writeBytes("Borrar usuario\n");
+			os.writeBytes(usuario + "\n");
+			os.flush();
+			String respuesta = is.readLine();
 			if (respuesta.equals("Borrado correcto")) {
 				return true;
 			} else {
@@ -116,13 +92,11 @@ public class Principal {
 
 	public static boolean crearUsuario(String usuario) {
 		try {
-			BufferedReader bin = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-			bout.write("Gestionar usuarios\n");
-			bout.write("Crear usuario\n");
-			bout.write(usuario + "\n");
-			bout.flush();
-			String respuesta = bin.readLine();
+			os.writeBytes("Gestionar usuarios\n");
+			os.writeBytes("Crear usuario\n");
+			os.writeBytes(usuario + "\n");
+			os.flush();
+			String respuesta = is.readLine();
 			if (respuesta.equals("Creado correcto")) {
 				return true;
 			} else {
@@ -134,6 +108,35 @@ public class Principal {
 		}
 
 		return false;
+	}
+	
+	public static String[] nombreExamenes(){
+		try {
+			os.writeBytes("Examenes\n");
+			os.flush();
+			String[] nomExam=(String[]) is.readObject();
+			return nomExam;
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
+	public static Examen pedirExamen(String seleccion) {
+		try {
+			os.writeBytes("Examen\n");
+			os.writeBytes(seleccion+"\n");
+			os.flush();
+			
+			Examen Exam= (Examen) is.readObject();
+			return Exam;
+			
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

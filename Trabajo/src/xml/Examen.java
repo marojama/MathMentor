@@ -5,14 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-@XmlRootElement(name="examen")
-@XmlType(propOrder= {"tema","fecha","preguntas"})
+//@XmlRootElement(name="examen")
+//@XmlType(propOrder= {"tema","fecha","preguntas"})
 public class Examen implements Serializable{
 
 	private int id;
@@ -35,7 +29,7 @@ public class Examen implements Serializable{
 		this.preguntas = preguntas;
 	}
 	
-	@XmlAttribute
+	//@XmlAttribute
 	public int getId() {
 		return id;
 	}
@@ -44,7 +38,7 @@ public class Examen implements Serializable{
 		this.id = id;
 	}
 	
-	@XmlAttribute
+	//@XmlAttribute
 	public boolean isActivo() {
 		return activo;
 	}
@@ -69,8 +63,8 @@ public class Examen implements Serializable{
 		this.fecha = fecha;
 	}
 	
-	@XmlElementWrapper(name="preguntas")
-	@XmlElement(name="pregunta")
+	//@XmlElementWrapper(name="preguntas")
+	//@XmlElement(name="pregunta")
 	public List<Pregunta> getPreguntas() {
 		return preguntas;
 	}
