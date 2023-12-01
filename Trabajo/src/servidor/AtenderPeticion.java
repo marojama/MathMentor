@@ -15,14 +15,18 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -139,9 +143,14 @@ public class AtenderPeticion extends Thread {
 			//Elemento <examen>
 			Element raiz=doc.getDocumentElement();
 			examen.setActivo(Boolean.parseBoolean(raiz.getAttribute("activo")));
+			System.out.println(examen.isActivo());
 			examen.setId(Integer.parseInt(raiz.getAttribute("id")));
-			examen.setFecha(Date.valueOf(raiz.getElementsByTagName("fecha").item(0).getTextContent()));
+			System.out.println(examen.getId());
+			//DateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+			//examen.setFecha(format.parse(raiz.getElementsByTagName("fecha").item(0).getTextContent()));
+			//System.out.println(examen.getFecha().toString());
 			examen.setTema(raiz.getElementsByTagName("tema").item(0).getTextContent());
+			System.out.println(examen.getTema());
 			NodeList p=raiz.getElementsByTagName("pregunta");
 			for(int i=0;i<p.getLength();i++) {
 				Pregunta preg=new Pregunta();
@@ -159,6 +168,9 @@ public class AtenderPeticion extends Thread {
 			System.out.println(examen.toString());
 			return examen;
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (DOMException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}

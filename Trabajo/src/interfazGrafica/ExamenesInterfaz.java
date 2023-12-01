@@ -2,30 +2,36 @@ package interfazGrafica;
 
 import java.awt.EventQueue;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.border.EmptyBorder;
 
 import principal.Principal;
 import xml.Examen;
 
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import java.awt.GridBagLayout;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
-public class ExamenInterfaz extends JFrame{
+public class ExamenesInterfaz extends JFrame {
 
-	private JFrame frame;
-	private Examen examen;
+	private JPanel contentPane;
 	private String usuario;
-	
+	private Examen examen;
+
 	/**
 	 * Launch the application.
 	 */
@@ -33,7 +39,7 @@ public class ExamenInterfaz extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ExamenInterfaz frame = new ExamenInterfaz("Ejemplo.xml","");
+					ExamenesInterfaz frame = new ExamenesInterfaz();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,35 +49,27 @@ public class ExamenInterfaz extends JFrame{
 	}
 
 	/**
-	 * Create the application.
-	 * @param seleccion 
-	 * @param seleccion2 
+	 * Create the frame.
 	 */
-	public ExamenInterfaz(String seleccion, String usuario) {
-		this.examen=Principal.pedirExamen(seleccion);
-		this.usuario=usuario;
-		initialize();
-	}
+	public ExamenesInterfaz() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1280, 720);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(218, 255, 239));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(218, 255, 239));
-		frame.setBounds(100, 100, 1280, 720);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("MathMentor");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
 		lblNewLabel.setBounds(10, 11, 1248, 84);
-		frame.getContentPane().add(lblNewLabel);
+		contentPane.add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(330, 106, 609, 408);
-		frame.getContentPane().add(panel);
+		contentPane.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {609, 0};
 		gbl_panel.rowHeights = new int[] {136, 68, 68, 68, 68};
@@ -134,23 +132,36 @@ public class ExamenInterfaz extends JFrame{
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
 		lblPlanta1.setBounds(89, 0, 216, 510);
-		panel.add(lblPlanta1);
+		contentPane.add(lblPlanta1);
 		
 		JLabel lblPlanta2 = new JLabel();
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
-		panel.add(lblPlanta2);
+		contentPane.add(lblPlanta2);
 		
 		JLabel lblAtras = new JLabel("");
 		lblAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new ExamenesYJuegos(usuario).setVisible(true);
-				dispose();
+				if(usuario==null) {
+					new PantallaProfesora().setVisible(true);
+					dispose();
+				}
+				else {
+					new PantallaInicial().setVisible(true);
+					dispose();
+				}
 			}
 		});
 		lblAtras.setIcon(imagen3);
 		lblAtras.setBounds(10, 11, 50, 50);
-		panel.add(lblAtras);
+		contentPane.add(lblAtras);
 	}
+	
+	public ExamenesInterfaz(String seleccion, String usuario) {
+		this();
+		this.examen=Principal.pedirExamen(seleccion);
+		this.usuario=usuario;
+	}
+
 }
