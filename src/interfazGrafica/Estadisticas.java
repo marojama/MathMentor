@@ -35,6 +35,7 @@ public class Estadisticas extends JFrame {
 	 * Create the frame.
 	 */
 	public Estadisticas() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();

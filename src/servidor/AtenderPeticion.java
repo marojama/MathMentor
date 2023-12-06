@@ -3,6 +3,8 @@ package servidor;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,6 +38,7 @@ public class AtenderPeticion extends Thread {
 	private ObjectInputStream is;
 	private ObjectOutputStream os;
 	private String usuario;
+	private String nomFich;
 
 	public AtenderPeticion(Socket s) {
 		
@@ -84,13 +87,11 @@ public class AtenderPeticion extends Thread {
 					String[] nomExam=devolverNomExam(this.usuario);
 					os.writeObject(nomExam);
 					os.flush();
-					System.out.println("He mandado los nombres");
 				}else if(opcion.equals("Examen")) {
 					String e=is.readLine();
 					Examen examen=devolverExam(this.usuario,e);
 					os.writeObject(examen);
 					os.flush();
-					
 				}else if(opcion.equals("Gestionar usuarios")) {
 					opcion=is.readLine();
 					if(opcion.equals("Borrar usuario")) {
@@ -109,9 +110,31 @@ public class AtenderPeticion extends Thread {
 					}
 				}
 				else if(opcion.equals("Examen hecho")) {
-					String nomFich=is.readLine();
+					this.nomFich=is.readLine();
 					String usuario=is.readLine();
 					recibirExamen(nomFich,usuario);
+				}
+				else if(opcion.equals("Fichero")) {
+					String nom=is.readLine();
+					String[] separado=nom.split("\\.");
+					String extension=separado[separado.length-1];
+					File f=new File("./"+usuario+"/"+nomFich.split(".xml")[0]+"Imagen."+extension);
+					try(FileOutputStream fout=new FileOutputStream(f)){
+						long tam=is.readLong();
+						byte[] buf=new byte[1024];
+						int leido=is.read(buf);
+						int suma=0;
+						while(suma<tam) {
+							fout.write(buf, 0, leido);
+							suma=suma+leido;
+							if(suma<tam) {
+								leido=is.read(buf);
+							}
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				opcion=is.readLine();
 			}
@@ -243,7 +266,7 @@ public class AtenderPeticion extends Thread {
 		File[] ficheros=carpeta.listFiles();
 		String[] examenes=new String[ficheros.length];
 		for(int i=0,n=ficheros.length;i<n;i++) {
-			if(!ficheros[i].getName().contains("Resuelto")) {
+			if(!ficheros[i].getName().contains("Resuelto") && !ficheros[i].getName().contains("Imagen")) {
 				examenes[i]=ficheros[i].getName();
 			}
 		}

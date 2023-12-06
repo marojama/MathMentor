@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -150,5 +151,25 @@ public class Principal {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static void enviarArchivo(File archivo) {
+		try(FileInputStream fin=new FileInputStream(archivo)){
+			os.writeBytes("Fichero\n");
+			os.writeBytes(archivo.getName()+"\n");
+			os.writeLong(archivo.length());
+			byte[] buf=new byte[1024];
+			int leido=fin.read(buf);
+			while(leido!=-1) {
+				os.write(buf, 0, leido);
+				leido=fin.read(buf);
+			}
+			os.writeByte(-1);
+			os.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
