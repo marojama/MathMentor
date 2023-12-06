@@ -81,7 +81,6 @@ public class AtenderPeticion extends Thread {
 				}else if(opcion.equals("Nerdle")) {
 					
 				}else if(opcion.equals("Examenes")) {
-					System.out.println("He recibido examenes");
 					String[] nomExam=devolverNomExam(this.usuario);
 					os.writeObject(nomExam);
 					os.flush();
@@ -224,7 +223,6 @@ public class AtenderPeticion extends Thread {
 				}
 				preg.setRespuestas(respuestas);
 				preg.setCorrecta(Integer.parseInt(((Element) p.item(i)).getAttribute("correcta")));
-				System.out.println(preg.getCorrecta());
 				preguntas.add(preg);
 			}
 			examen.setPreguntas(preguntas);

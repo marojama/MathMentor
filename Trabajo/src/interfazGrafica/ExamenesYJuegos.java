@@ -66,11 +66,15 @@ public class ExamenesYJuegos extends JFrame {
 		btnExamenes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Me han hecho clic");
 				String[] listaExamenes=Principal.nombreExamenes();
-				String seleccion=(String) JOptionPane.showInputDialog(ExamenesYJuegos.this, "Selecciona el examen a realizar", "Selección examen", JOptionPane.QUESTION_MESSAGE, null, listaExamenes, listaExamenes[0]);
-				new ExamenInterfaz(seleccion,usuario).setVisible(true);
-				ExamenesYJuegos.this.dispose();
+				if(listaExamenes[0]==null) {
+					JOptionPane.showMessageDialog(ExamenesYJuegos.this,"Hoy no tienes examenes pendientes, pero puedes disfrutar de los juegos para repasar","No hay examenes disponibles", JOptionPane.OK_OPTION);
+				}
+				else {
+					String seleccion=(String) JOptionPane.showInputDialog(ExamenesYJuegos.this, "Selecciona el examen a realizar", "Selección examen", JOptionPane.QUESTION_MESSAGE, null, listaExamenes, listaExamenes[0]);
+					new ExamenInterfaz(seleccion,usuario).setVisible(true);
+					ExamenesYJuegos.this.dispose();
+				}
 			}
 		});
 		btnExamenes.setForeground(Color.WHITE);

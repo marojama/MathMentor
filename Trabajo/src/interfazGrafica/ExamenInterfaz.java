@@ -111,7 +111,18 @@ public class ExamenInterfaz extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(!comprobado) {
-					corregirRespuesta();
+					boolean seleccionado=false;
+					for(int i=0;i<respuestas.length && !seleccionado;i++) {
+						if(respuestas[i].isSelected()) {
+							seleccionado=true;
+						}
+					}
+					if(seleccionado) {
+						corregirRespuesta();
+					}
+					else {
+						JOptionPane.showMessageDialog(ExamenInterfaz.this, "Debes seleccionar una respuesta.", "Ninguna respuesta seleccionada", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				else {
 					if(btnComprobarSiguiente.getText().equals("Finalizar")) {
@@ -127,7 +138,7 @@ public class ExamenInterfaz extends JFrame {
 						new ExamenesYJuegos(usuario).setVisible(true);
 						dispose();
 					}else {
-						pasarSiguiente();
+						pasarSiguiente();						
 					}
 				}
 			}
