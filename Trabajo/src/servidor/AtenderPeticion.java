@@ -2,32 +2,20 @@ package servidor;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -197,6 +185,8 @@ public class AtenderPeticion extends Thread {
 			if(!f.exists()) {
 				f.createNewFile();
 			}
+			File antiguo=new File("./"+usuario2+"/"+nomFich);
+			antiguo.delete();
 			StreamResult result=new StreamResult(f);
 			t.transform(source, result);
 		} catch (ClassNotFoundException | IOException | ParserConfigurationException | TransformerException e) {
@@ -255,7 +245,9 @@ public class AtenderPeticion extends Thread {
 		File[] ficheros=carpeta.listFiles();
 		String[] examenes=new String[ficheros.length];
 		for(int i=0,n=ficheros.length;i<n;i++) {
-			examenes[i]=ficheros[i].getName();
+			if(!ficheros[i].getName().contains("Resuelto")) {
+				examenes[i]=ficheros[i].getName();
+			}
 		}
 		return examenes;
 	}

@@ -35,25 +35,7 @@ public class ExamenInterfaz extends JFrame {
 	JPanel panel;
 	private int correctas=0;
 	private String nombreFich;
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					ExamenInterfaz frame = new ExamenInterfaz();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ExamenInterfaz(String seleccion, String usuario) {
 		this.usuario=usuario;
 		this.nombreFich=seleccion;
@@ -137,9 +119,14 @@ public class ExamenInterfaz extends JFrame {
 					+examen.getPreguntas().size()+". Tus resultados se han enviado a tu profe", "Fin examen", JOptionPane.OK_OPTION);
 						examen.setNumCorrectas(correctas);
 						examen.setFecha(LocalDateTime.now());
+						examen.setActivo(false);
 						Principal.enviarExamen(examen,nombreFich,usuario);
+						btnComprobarSiguiente.setText("Salir");
 					}
-					else {
+					else if(btnComprobarSiguiente.getText().equals("Salir")){
+						new ExamenesYJuegos(usuario).setVisible(true);
+						dispose();
+					}else {
 						pasarSiguiente();
 					}
 				}
@@ -169,8 +156,8 @@ public class ExamenInterfaz extends JFrame {
 				}
 				else {
 					respuestas[i].setBackground(Color.RED);
-					examen.getPreguntas().get(actualPregunta).setContestada(i);
 				}
+				examen.getPreguntas().get(actualPregunta).setContestada(i);
 			}
 		}
 		if(examen.getPreguntas().size()>this.actualPregunta+1) {
