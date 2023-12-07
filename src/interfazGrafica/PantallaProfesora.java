@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import principal.Principal;
+import xml.Examen;
+import xml.Pregunta;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -20,6 +22,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PantallaProfesora extends JFrame {
 
@@ -99,14 +103,14 @@ public class PantallaProfesora extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String[] listaAlumnos = Principal.nombreAlumnos();
-				if (listaAlumnos[0] == null) {
+				if (listaAlumnos.length==0) {
 					JOptionPane.showMessageDialog(PantallaProfesora.this, "Aún no tienes alumnos", "No hay alumnos",
 							JOptionPane.OK_OPTION);
 				} else {
 					String alumno = (String) JOptionPane.showInputDialog(PantallaProfesora.this, "Selecciona el alumno",
 							"Selección alumno", JOptionPane.QUESTION_MESSAGE, null, listaAlumnos, listaAlumnos[0]);
 					String[] listaExamenes = Principal.nombresExamenes(alumno);
-					if (listaExamenes[0] == null) {
+					if (listaExamenes.length==0) {
 						JOptionPane.showMessageDialog(PantallaProfesora.this,
 								"Aún no ha realizado los examenes el alumnos", "No hay examenes a mostrar",
 								JOptionPane.OK_OPTION);
@@ -140,6 +144,12 @@ public class PantallaProfesora extends JFrame {
 		contentPane.add(btnVerEstadsticas);
 
 		JButton btnCrearExamen = new JButton("Crear examen");
+		btnCrearExamen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				crearExamen();
+			}
+		});
 		btnCrearExamen.setForeground(Color.WHITE);
 		btnCrearExamen.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnCrearExamen.setBackground(new Color(100, 182, 172));
@@ -179,6 +189,40 @@ public class PantallaProfesora extends JFrame {
 				Principal.cerrar();
 			}
 		});
+	}
+
+	protected void crearExamen() {
+		Examen e=new Examen();
+		List<Pregunta> preguntas=new ArrayList<>();
+		
+		String[] listaAlumnos = Principal.nombreAlumnos();
+		if (listaAlumnos.length==0) {
+			JOptionPane.showMessageDialog(PantallaProfesora.this, "Aún no tienes alumnos", "No hay alumnos",
+					JOptionPane.OK_OPTION);
+		} else {
+			String alumno = (String) JOptionPane.showInputDialog(PantallaProfesora.this, "Selecciona el alumno",
+					"Selección alumno", JOptionPane.QUESTION_MESSAGE, null, listaAlumnos, listaAlumnos[0]);
+			
+			String tema=JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca el nombre del tema", "Tema", JOptionPane.QUESTION_MESSAGE);
+			e.setTema(tema);
+			
+			String pregunta="";
+			while(pregunta!=null) {
+				pregunta=JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca la pregunta", "Pregunta", JOptionPane.QUESTION_MESSAGE);
+				if(pregunta!=null) {
+					Pregunta p=new Pregunta();
+					p.setEnunciado(pregunta);
+					int n=Integer.parseInt(JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca el número de respuestas", "Número de respuestas", JOptionPane.QUESTION_MESSAGE));
+					List<String> respuestas=new ArrayList<>();
+					for(int i=0;i<n;i++) {
+						respuestas.add(JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca la respuestas "+i+1, "Respuestas", JOptionPane.QUESTION_MESSAGE));
+						
+					}
+					
+				}
+			}
+		}
+				
 	}
 
 	private void cambiarPantallaJuegos() {

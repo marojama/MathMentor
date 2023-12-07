@@ -70,7 +70,7 @@ public class ExamenesYJuegos extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String[] listaExamenes = Principal.nombreExamenes();
-				if (listaExamenes[0] == null) {
+				if (listaExamenes.length==0) {
 					JOptionPane.showMessageDialog(ExamenesYJuegos.this,
 							"Hoy no tienes examenes pendientes, pero puedes disfrutar de los juegos para repasar",
 							"No hay examenes disponibles", JOptionPane.OK_OPTION);

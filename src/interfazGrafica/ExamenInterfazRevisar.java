@@ -3,6 +3,7 @@ package interfazGrafica;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -30,6 +31,7 @@ public class ExamenInterfazRevisar extends JFrame {
 
 	private JPanel contentPane;
 	private Examen examen;
+	private ImageIcon imagen;
 	private int actualPregunta = 0;
 	private JRadioButton[] respuestas;
 	JButton btnComprobarSiguiente;
@@ -41,6 +43,7 @@ public class ExamenInterfazRevisar extends JFrame {
 	public ExamenInterfazRevisar(String seleccion, String alumno) {
 		setResizable(false);
 		this.examen = Principal.pedirExamen(seleccion, alumno);
+		this.imagen=Principal.pedirImagen();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
@@ -139,10 +142,15 @@ public class ExamenInterfazRevisar extends JFrame {
 		contentPane.add(lblNumPreg);
 
 		btnEnviarArchivo = new JButton("Ver Archivo");
+		if(imagen==null) {
+			btnEnviarArchivo.setEnabled(false);
+		}
 		btnEnviarArchivo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Pendiente
+				if(btnEnviarArchivo.isEnabled()) {
+					mostrarImagen();
+				}
 			}
 		});
 		btnEnviarArchivo.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -156,6 +164,37 @@ public class ExamenInterfazRevisar extends JFrame {
 				Principal.cerrar();
 			}
 		});
+	}
+
+	protected void mostrarImagen() {
+		JFrame jfImagenExamen = new JFrame();
+		JPanel contenedorImagen = new JPanel();
+		contenedorImagen.setBorder(new EmptyBorder(5, 5, 5, 5));
+		jfImagenExamen.setContentPane(contenedorImagen);
+		jfImagenExamen.setVisible(true);
+		jfImagenExamen.setTitle("Imagen del examen");
+		
+		Image image = imagen.getImage();
+		int width = imagen.getIconWidth(), height = imagen.getIconHeight();
+		int redWid, redHei;
+		//Imagen vertical
+		if (width < height) {
+			redWid = 400;
+			redHei = redWid*height/width;
+		}
+		//Imagen horizontal
+		else {
+			redHei = 400;
+			redWid = redHei*width/height;
+		}
+		//Imagen redimensionada
+		ImageIcon imagenMostrar = new ImageIcon(image.getScaledInstance(redWid, redHei, Image.SCALE_SMOOTH));
+		jfImagenExamen.setBounds(0, 0, imagenMostrar.getIconWidth(), imagenMostrar.getIconHeight() + 50);
+		JLabel lblImagenExamen = new JLabel("");
+		lblImagenExamen.setBounds(jfImagenExamen.getBounds());
+		lblImagenExamen.setIcon(imagenMostrar);
+		jfImagenExamen.setResizable(false);
+		contenedorImagen.add(lblImagenExamen);
 	}
 
 	public void corregirRespuesta() {

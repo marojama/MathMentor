@@ -139,7 +139,6 @@ public class ExamenInterfaz extends JFrame {
 								"Fin examen", JOptionPane.OK_OPTION);
 						examen.setNumCorrectas(correctas);
 						examen.setFecha(LocalDateTime.now());
-						examen.setActivo(false);
 						Principal.enviarExamen(examen, nombreFich, usuario);
 						btnComprobarSiguiente.setText("Salir");
 						btnEnviarArchivo.setEnabled(true);

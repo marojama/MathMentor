@@ -13,9 +13,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -88,7 +90,17 @@ public class AtenderPeticion extends Thread {
 					String e=is.readLine();
 					String u=is.readLine();
 					Examen examen=devolverExam(u,e);
+					File dir=new File(u);
+					File imagen=null;
+					ImageIcon i=null;
+					for(File f :dir.listFiles()) {
+						if(f.getName().startsWith(e.split("Resuelto")[0])&&f.getName().contains("Imagen")) {
+							imagen=f;
+							i=new ImageIcon(Files.readAllBytes(imagen.toPath()));
+						}
+					}
 					os.writeObject(examen);
+					os.writeObject(i);
 					os.flush();
 				}else if(opcion.equals("Gestionar usuarios")) {
 					gestionarUsuarios();
@@ -203,10 +215,22 @@ public class AtenderPeticion extends Thread {
 	private String[] devolverNomExamenes(String e) {
 		File carpeta=new File(e);
 		File[] ficheros=carpeta.listFiles();
-		String[] examenes=new String[ficheros.length];
+		String[] aux=new String[ficheros.length];
+		int num=0;
 		for(int i=0,n=ficheros.length;i<n;i++) {
 			if(ficheros[i].getName().contains("Resuelto")) {
-				examenes[i]=ficheros[i].getName();
+				aux[i]=ficheros[i].getName();
+				num++;
+			}
+		}
+		String[] examenes=new String[num];
+		if(num!=0) {
+			int j=0;
+			for(int i=0,n=ficheros.length;i<n;i++) {
+				if(aux[i]!=null) {
+					examenes[j]=aux[i];
+					j++;
+				}
 			}
 		}
 		return examenes;
@@ -214,18 +238,29 @@ public class AtenderPeticion extends Thread {
 
 	private String[] devolverNomAlumnos() {
 		File f=new File("Usuarios.txt");
-		String[] nomAlum=new String[(int) f.length()];
-		int i=0;
+		String[] aux=new String[(int) f.length()];
+		int num=0;
 		try(DataInputStream fin=new DataInputStream(new FileInputStream(f))){
 			String leido=fin.readLine();
 			while(leido!=null) {
-				nomAlum[i]=leido;
-				i++;
+				aux[num]=leido;
+				num++;
 				leido=fin.readLine();
 			}
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		String[] nomAlum=new String[num];
+		if(num!=0) {
+			int j=0;
+			for(int i=0,n=(int) f.length();i<n;i++) {
+				if(aux[i]!=null) {
+					nomAlum[j]=aux[i];
+					j++;
+				}
+			}
 		}
 		return nomAlum;
 	}
@@ -239,8 +274,6 @@ public class AtenderPeticion extends Thread {
 			Document doc=db.newDocument();
 			
 			Element examen=doc.createElement("examen");
-			examen.setAttribute("activo", String.valueOf(ex.isActivo()));
-			examen.setAttribute("id", String.valueOf(ex.getId()));
 			
 			Element tema=doc.createElement("tema");
 			tema.appendChild(doc.createTextNode(ex.getTema()));
@@ -308,8 +341,6 @@ public class AtenderPeticion extends Thread {
 			ArrayList<Pregunta> preguntas=new ArrayList<>();
 			//Elemento <examen>
 			Element raiz=doc.getDocumentElement();
-			examen.setActivo(Boolean.parseBoolean(raiz.getAttribute("activo")));
-			examen.setId(Integer.parseInt(raiz.getAttribute("id")));
 			//DateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 			//examen.setFecha(format.parse(raiz.getElementsByTagName("fecha").item(0).getTextContent()));
 			//System.out.println(examen.getFecha().toString());
@@ -325,7 +356,10 @@ public class AtenderPeticion extends Thread {
 				}
 				preg.setRespuestas(respuestas);
 				preg.setCorrecta(Integer.parseInt(((Element) p.item(i)).getAttribute("correcta")));
-				preg.setContestada(Integer.parseInt(((Element) p.item(i)).getAttribute("contestada")));
+				String contestada= (((Element) p.item(i)).getAttribute(("contestada")));
+				if(!contestada.equals("")) {
+					preg.setContestada(Integer.parseInt(contestada));
+				}
 				preguntas.add(preg);
 			}
 			examen.setPreguntas(preguntas);
@@ -344,12 +378,26 @@ public class AtenderPeticion extends Thread {
 	private String[] devolverNomExam(String usuario2) {
 		File carpeta=new File(usuario2);
 		File[] ficheros=carpeta.listFiles();
-		String[] examenes=new String[ficheros.length];
+		String[] aux=new String[ficheros.length];
+		int num=0;
 		for(int i=0,n=ficheros.length;i<n;i++) {
 			if(!ficheros[i].getName().contains("Resuelto") && !ficheros[i].getName().contains("Imagen")) {
-				examenes[i]=ficheros[i].getName();
+				aux[i]=ficheros[i].getName();
+				num++;
 			}
 		}
+		
+		String[] examenes=new String[num];
+		if(num!=0) {
+			int j=0;
+			for(int i=0,n=(int) ficheros.length;i<n;i++) {
+				if(aux[i]!=null) {
+					examenes[j]=aux[i];
+					j++;
+				}
+			}
+		}
+		
 		return examenes;
 	}
 
@@ -432,7 +480,4 @@ public class AtenderPeticion extends Thread {
 		}
 		return creado;
 	}
-	
-	
-
 }

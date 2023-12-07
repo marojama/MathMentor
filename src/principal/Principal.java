@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import interfazGrafica.InicioSesion;
@@ -206,14 +207,28 @@ public class Principal {
 			os.writeBytes(seleccion+"\n");
 			os.writeBytes(alumno+"\n");
 			os.flush();
-			Examen Exam= (Examen) is.readObject();
-			return Exam;
+			Examen exam= (Examen) is.readObject();
+			return exam;
 			
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static ImageIcon pedirImagen() {
+		ImageIcon imagen=null;
+		try {
+			imagen = (ImageIcon) is.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return imagen;
 	}
 
 	public static void cerrar() {
