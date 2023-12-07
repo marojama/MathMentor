@@ -2,8 +2,10 @@ package servidor;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -68,21 +70,11 @@ public class AtenderPeticion extends Thread {
 		{
 			String opcion=is.readLine();
 			
-			while(!opcion.equals("Salir")) {
+			while(opcion!=null) {
 				if(opcion.equals("Iniciar sesion")) {
-					this.usuario=is.readLine();
-					boolean existeUsuario=comprobarUsuario(usuario);
-					if(existeUsuario) {
-						this.usuario=usuario;
-						os.writeBytes("Inicio sesion correcto\n");
-						os.flush();
-					}
-					else {
-						os.writeBytes("Error usuario\n");
-						os.flush();
-					}
+					inicioSesion();
 				}else if(opcion.equals("Nerdle")) {
-					
+					nerdle();
 				}else if(opcion.equals("Examenes")) {
 					String[] nomExam=devolverNomExam(this.usuario);
 					os.writeObject(nomExam);
@@ -92,22 +84,14 @@ public class AtenderPeticion extends Thread {
 					Examen examen=devolverExam(this.usuario,e);
 					os.writeObject(examen);
 					os.flush();
+				}else if(opcion.equals("Examen Alumno")) {
+					String e=is.readLine();
+					String u=is.readLine();
+					Examen examen=devolverExam(u,e);
+					os.writeObject(examen);
+					os.flush();
 				}else if(opcion.equals("Gestionar usuarios")) {
-					opcion=is.readLine();
-					if(opcion.equals("Borrar usuario")) {
-						boolean borrado=borrarUsuario(is.readLine());
-						if(borrado) {
-							os.writeBytes("Borrado correcto\n");
-							os.flush();
-						}
-					}
-					else if(opcion.equals("Crear usuario")) {
-						boolean creado=crearUsuario(is.readLine());
-						if(creado) {
-							os.writeBytes("Creado correcto\n");
-							os.flush();
-						}
-					}
+					gestionarUsuarios();
 				}
 				else if(opcion.equals("Examen hecho")) {
 					this.nomFich=is.readLine();
@@ -115,31 +99,20 @@ public class AtenderPeticion extends Thread {
 					recibirExamen(nomFich,usuario);
 				}
 				else if(opcion.equals("Fichero")) {
-					String nom=is.readLine();
-					String[] separado=nom.split("\\.");
-					String extension=separado[separado.length-1];
-					File f=new File("./"+usuario+"/"+nomFich.split(".xml")[0]+"Imagen."+extension);
-					try(FileOutputStream fout=new FileOutputStream(f)){
-						long tam=is.readLong();
-						byte[] buf=new byte[1024];
-						int leido=is.read(buf);
-						int suma=0;
-						while(suma<tam) {
-							fout.write(buf, 0, leido);
-							suma=suma+leido;
-							if(suma<tam) {
-								leido=is.read(buf);
-							}
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					fichero();
+				}
+				else if(opcion.equals("Alumnos")) {
+					String[] nomAlum=devolverNomAlumnos();
+					os.writeObject(nomAlum);
+					os.flush();
+				}else if(opcion.equals("Nombres examenes")) {
+					String e=is.readLine();
+					String[] nomExam=devolverNomExamenes(e);
+					os.writeObject(nomExam);
+					os.flush();
 				}
 				opcion=is.readLine();
 			}
-			
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -151,6 +124,112 @@ public class AtenderPeticion extends Thread {
 		}
 	}
 	
+	private void gestionarUsuarios() {
+		try {
+			String opcion = is.readLine();
+			if(opcion.equals("Borrar usuario")) {
+				boolean borrado=borrarUsuario(is.readLine());
+				if(borrado) {
+					os.writeBytes("Borrado correcto\n");
+					os.flush();
+				}
+			}
+			else if(opcion.equals("Crear usuario")) {
+				boolean creado=crearUsuario(is.readLine());
+				if(creado) {
+					os.writeBytes("Creado correcto\n");
+					os.flush();
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void fichero() {
+		try {
+			String nom = is.readLine();
+			String[] separado=nom.split("\\.");
+			String extension=separado[separado.length-1];
+			File f=new File("./"+usuario+"/"+nomFich.split(".xml")[0]+"Imagen."+extension);
+			try(FileOutputStream fout=new FileOutputStream(f)){
+				long tam=is.readLong();
+				byte[] buf=new byte[1024];
+				int leido=is.read(buf);
+				int suma=0;
+				while(suma<tam) {
+					fout.write(buf, 0, leido);
+					suma=suma+leido;
+					if(suma<tam) {
+						leido=is.read(buf);
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+
+	private void nerdle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void inicioSesion() {
+		try {
+			String usuario=is.readLine();
+			boolean existeUsuario=comprobarUsuario(usuario);
+			if(existeUsuario) {
+				this.usuario=usuario;
+				os.writeBytes("Inicio sesion correcto\n");
+				os.flush();
+			}
+			else {
+				os.writeBytes("Error usuario\n");
+				os.flush();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private String[] devolverNomExamenes(String e) {
+		File carpeta=new File(e);
+		File[] ficheros=carpeta.listFiles();
+		String[] examenes=new String[ficheros.length];
+		for(int i=0,n=ficheros.length;i<n;i++) {
+			if(ficheros[i].getName().contains("Resuelto")) {
+				examenes[i]=ficheros[i].getName();
+			}
+		}
+		return examenes;
+	}
+
+	private String[] devolverNomAlumnos() {
+		File f=new File("Usuarios.txt");
+		String[] nomAlum=new String[(int) f.length()];
+		int i=0;
+		try(DataInputStream fin=new DataInputStream(new FileInputStream(f))){
+			String leido=fin.readLine();
+			while(leido!=null) {
+				nomAlum[i]=leido;
+				i++;
+				leido=fin.readLine();
+			}
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nomAlum;
+	}
+
 	private void recibirExamen(String nomFich, String usuario2) {
 		try {
 			Examen ex=(Examen) is.readObject();
@@ -246,6 +325,7 @@ public class AtenderPeticion extends Thread {
 				}
 				preg.setRespuestas(respuestas);
 				preg.setCorrecta(Integer.parseInt(((Element) p.item(i)).getAttribute("correcta")));
+				preg.setContestada(Integer.parseInt(((Element) p.item(i)).getAttribute("contestada")));
 				preguntas.add(preg);
 			}
 			examen.setPreguntas(preguntas);

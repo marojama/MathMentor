@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import principal.Principal;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -14,6 +17,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class PantallaInicial extends JFrame {
 
@@ -48,13 +53,13 @@ public class PantallaInicial extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNombre = new JLabel("MathMentor");
 		lblNombre.setFont(new Font("Courier New", Font.PLAIN, 70));
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombre.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNombre);
-		
+
 		JButton btnIniciarSesion = new JButton("Iniciar sesión");
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -67,7 +72,7 @@ public class PantallaInicial extends JFrame {
 		btnIniciarSesion.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnIniciarSesion.setBounds(490, 258, 300, 50);
 		contentPane.add(btnIniciarSesion);
-		
+
 		JButton btnInvitado = new JButton("Invitado");
 		btnInvitado.addMouseListener(new MouseAdapter() {
 			@Override
@@ -80,29 +85,37 @@ public class PantallaInicial extends JFrame {
 		btnInvitado.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnInvitado.setBounds(490, 350, 300, 50);
 		contentPane.add(btnInvitado);
-		
-		ImageIcon imagen1=new ImageIcon("./planta1.png");
-		ImageIcon imagen2=new ImageIcon("./planta2.png");
-		
+
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
 		lblPlanta1.setBounds(89, 0, 216, 510);
 		contentPane.add(lblPlanta1);
-		
+
 		JLabel lblPlanta2 = new JLabel();
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
+
+		// Evento para que al cerrar la aplicación cierre los socket y no salte
+		// excepcion en el servidor
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				Principal.cerrar();
+			}
+		});
 	}
-	
+
 	private void cambiarPantallaInicio() {
-		InicioSesion is=new InicioSesion();
+		InicioSesion is = new InicioSesion();
 		is.setVisible(true);
 		this.dispose();
 	}
-	
+
 	private void cambiarPantallaJuegos() {
-		ExamenesYJuegos ej=new ExamenesYJuegos("invitado");
+		ExamenesYJuegos ej = new ExamenesYJuegos("invitado");
 		ej.setVisible(true);
 		this.dispose();
 	}

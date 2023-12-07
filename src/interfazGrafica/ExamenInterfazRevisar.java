@@ -26,27 +26,21 @@ import xml.Examen;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
-public class ExamenInterfaz extends JFrame {
+public class ExamenInterfazRevisar extends JFrame {
 
 	private JPanel contentPane;
-	private String usuario;
 	private Examen examen;
-	private boolean comprobado = false;
 	private int actualPregunta = 0;
 	private JRadioButton[] respuestas;
 	JButton btnComprobarSiguiente;
 	JLabel lblPregunta;
 	JPanel panel;
-	private int correctas = 0;
-	private String nombreFich;
 	JLabel lblNumPreg;
 	JButton btnEnviarArchivo;
 
-	public ExamenInterfaz(String seleccion, String usuario) {
+	public ExamenInterfazRevisar(String seleccion, String alumno) {
 		setResizable(false);
-		this.usuario = usuario;
-		this.nombreFich = seleccion;
-		this.examen = Principal.pedirExamen(seleccion);
+		this.examen = Principal.pedirExamen(seleccion, alumno);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
@@ -86,6 +80,7 @@ public class ExamenInterfaz extends JFrame {
 			grupo.add(respuestas[i]);
 		}
 		this.actualPregunta = 0;
+		corregirRespuesta();
 
 		ImageIcon imagen1 = new ImageIcon("./planta1.png");
 		ImageIcon imagen2 = new ImageIcon("./planta2.png");
@@ -105,7 +100,7 @@ public class ExamenInterfaz extends JFrame {
 		lblAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new ExamenesYJuegos(usuario).setVisible(true);
+				new PantallaProfesora().setVisible(true);
 				dispose();
 			}
 		});
@@ -113,52 +108,22 @@ public class ExamenInterfaz extends JFrame {
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
 
-		btnComprobarSiguiente = new JButton("Comprobar");
+		btnComprobarSiguiente = new JButton("Siguiente");
 		btnComprobarSiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (!comprobado) {
-					boolean seleccionado = false;
-					for (int i = 0; i < respuestas.length && !seleccionado; i++) {
-						if (respuestas[i].isSelected()) {
-							seleccionado = true;
-						}
-					}
-					if (seleccionado) {
-						corregirRespuesta();
-					} else {
-						JOptionPane.showMessageDialog(ExamenInterfaz.this, "Debes seleccionar una respuesta.",
-								"Ninguna respuesta seleccionada", JOptionPane.ERROR_MESSAGE);
-					}
+				if (btnComprobarSiguiente.getText().equals("Salir")) {
+					new PantallaProfesora().setVisible(true);
+					dispose();
 				} else {
-					if (btnComprobarSiguiente.getText().equals("Finalizar")) {
-						JOptionPane.showMessageDialog(panel,
-								"¡Enhorabuena! Has terminado. Tu resultado final ha sido de " + correctas
-										+ " preguntas correctas de " + examen.getPreguntas().size()
-										+ ". Tus resultados se han enviado a tu profe. Recuerda enviar una foto con las cuentas realizadas en el botón Enviar Archivo.",
-								"Fin examen", JOptionPane.OK_OPTION);
-						examen.setNumCorrectas(correctas);
-						examen.setFecha(LocalDateTime.now());
-						examen.setActivo(false);
-						Principal.enviarExamen(examen, nombreFich, usuario);
-						btnComprobarSiguiente.setText("Salir");
-						btnEnviarArchivo.setEnabled(true);
-					} else if (btnComprobarSiguiente.getText().equals("Salir")) {
-						new ExamenesYJuegos(usuario).setVisible(true);
-						dispose();
-					} else {
-						pasarSiguiente();
-					}
+					pasarSiguiente();
 				}
+
 			}
 		});
 		btnComprobarSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnComprobarSiguiente.setBounds(560, 567, 141, 37);
 		contentPane.add(btnComprobarSiguiente);
-
-		JLabel lblAcertadasTotales = new JLabel("");
-		lblAcertadasTotales.setBounds(833, 106, 106, 31);
-		contentPane.add(lblAcertadasTotales);
 
 		JLabel lblTema = new JLabel("New label");
 		lblTema.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -170,25 +135,16 @@ public class ExamenInterfaz extends JFrame {
 		lblNumPreg.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNumPreg.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNumPreg.setBounds(783, 106, 156, 31);
-		lblNumPreg.setText(this.actualPregunta + "/" + examen.getPreguntas().size());
+		lblNumPreg.setText(this.actualPregunta + 1 + "/" + examen.getPreguntas().size());
 		contentPane.add(lblNumPreg);
 
-		btnEnviarArchivo = new JButton("Enviar Archivo");
+		btnEnviarArchivo = new JButton("Ver Archivo");
 		btnEnviarArchivo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setDialogTitle("Seleccionar Archivo");
-
-				int seleccion = fileChooser.showOpenDialog(ExamenInterfaz.this);
-
-				if (seleccion == JFileChooser.APPROVE_OPTION) {
-					File archivo = fileChooser.getSelectedFile();
-					Principal.enviarArchivo(archivo);
-				}
+				// Pendiente
 			}
 		});
-		btnEnviarArchivo.setEnabled(false);
 		btnEnviarArchivo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnEnviarArchivo.setBounds(750, 567, 175, 37);
 		contentPane.add(btnEnviarArchivo);
@@ -205,30 +161,19 @@ public class ExamenInterfaz extends JFrame {
 	public void corregirRespuesta() {
 		int correcta = examen.getPreguntas().get(actualPregunta).getCorrecta();
 		respuestas[correcta].setBackground(Color.GREEN);
-		for (int i = 0, n = respuestas.length; i < n; i++) {
-			if (respuestas[i].isSelected()) {
-				if (i == correcta) {
-					this.correctas++;
-				} else {
-					respuestas[i].setBackground(Color.RED);
-				}
-				examen.getPreguntas().get(actualPregunta).setContestada(i);
-			}
+		int numContestada = examen.getPreguntas().get(actualPregunta).getContestada();
+		respuestas[numContestada].setSelected(true);
+		if (numContestada != correcta) {
+			respuestas[numContestada].setBackground(Color.RED);
 		}
-		if (examen.getPreguntas().size() > this.actualPregunta + 1) {
-			btnComprobarSiguiente.setText("Siguiente");
-		} else {
-			this.actualPregunta++;
-			lblNumPreg.setText(actualPregunta + "/" + examen.getPreguntas().size());
-			btnComprobarSiguiente.setText("Finalizar");
+		if (this.actualPregunta + 1 == this.examen.getPreguntas().size()) {
+			btnComprobarSiguiente.setText("Salir");
 		}
-		this.comprobado = true;
-
 	}
 
 	public void pasarSiguiente() {
 		this.actualPregunta++;
-		lblNumPreg.setText(this.actualPregunta + "/" + examen.getPreguntas().size());
+		lblNumPreg.setText(this.actualPregunta + 1 + "/" + examen.getPreguntas().size());
 		int numRespuestas = examen.getPreguntas().get(this.actualPregunta).getRespuestas().size();
 		GridLayout grid = new GridLayout(numRespuestas + 1, 1);
 		panel.setLayout(grid);
@@ -246,7 +191,6 @@ public class ExamenInterfaz extends JFrame {
 			panel.add(respuestas[i]);
 			grupo.add(respuestas[i]);
 		}
-		btnComprobarSiguiente.setText("Comprobar");
-		this.comprobado = false;
+		corregirRespuesta();
 	}
 }

@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import principal.Principal;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -13,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Juegos extends JFrame {
 
@@ -48,13 +53,13 @@ public class Juegos extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("MathMentor");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
-		
+
 		JButton btnNerdle = new JButton("Nerdle");
 		btnNerdle.addMouseListener(new MouseAdapter() {
 			@Override
@@ -67,53 +72,51 @@ public class Juegos extends JFrame {
 		btnNerdle.setBackground(new Color(100, 182, 172));
 		btnNerdle.setBounds(428, 258, 300, 50);
 		contentPane.add(btnNerdle);
-		
+
 		JButton btnJuegos = new JButton("...");
 		btnJuegos.setForeground(Color.WHITE);
 		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnJuegos.setBackground(new Color(100, 182, 172));
 		btnJuegos.setBounds(428, 350, 300, 50);
 		contentPane.add(btnJuegos);
-		
+
 		JButton btnE = new JButton("e");
 		btnE.setForeground(Color.WHITE);
 		btnE.setBackground(new Color(100, 182, 172));
 		btnE.setBounds(783, 258, 50, 50);
 		contentPane.add(btnE);
-		
+
 		JButton btnNewButton_2 = new JButton("<--");
 		btnNewButton_2.setForeground(Color.WHITE);
 		btnNewButton_2.setBackground(new Color(100, 182, 172));
 		btnNewButton_2.setBounds(783, 350, 50, 50);
 		contentPane.add(btnNewButton_2);
-		
-		ImageIcon imagen1=new ImageIcon("./planta1.png");
-		ImageIcon imagen2=new ImageIcon("./planta2.png");
-		ImageIcon imagen3=new ImageIcon("./flechita.png");
-		
+
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./flechita.png");
+
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
 		lblPlanta1.setBounds(89, 0, 216, 510);
 		contentPane.add(lblPlanta1);
-		
+
 		JLabel lblPlanta2 = new JLabel();
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
-		
+
 		JLabel lblAtras = new JLabel("");
 		lblAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(usuario==null) {
+				if (usuario == null) {
 					new ExamenesYJuegos().setVisible(true);
 					dispose();
-				}
-				else if(usuario.equals("Profe")){
+				} else if (usuario.equals("Profe")) {
 					new PantallaProfesora().setVisible(true);
 					dispose();
-				}
-				else {
+				} else {
 					new ExamenesYJuegos(usuario).setVisible(true);
 					dispose();
 				}
@@ -122,15 +125,23 @@ public class Juegos extends JFrame {
 		lblAtras.setIcon(imagen3);
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
+
+		// Evento para que al cerrar la aplicación cierre los socket y no salte
+		// excepcion en el servidor
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				Principal.cerrar();
+			}
+		});
 	}
-	
+
 	public Juegos(String usuario) {
 		this();
-		this.usuario=usuario;
+		this.usuario = usuario;
 	}
-	
+
 	private void cambiarPantallaNerdle() {
-		NerdleNormal nn=new NerdleNormal(this.usuario);
+		NerdleNormal nn = new NerdleNormal(this.usuario);
 		nn.setVisible(true);
 		this.dispose();
 	}

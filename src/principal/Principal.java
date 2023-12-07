@@ -172,4 +172,59 @@ public class Principal {
 		}
 		
 	}
+
+	public static String[] nombreAlumnos() {
+		try {
+			os.writeBytes("Alumnos\n");
+			os.flush();
+			String[] nomAlum=(String[]) is.readObject();
+			return nomAlum;
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String[] nombresExamenes(String alumno) {
+		try {
+			os.writeBytes("Nombres examenes\n");
+			os.writeBytes(alumno+"\n");
+			os.flush();
+			String[] nomAlum=(String[]) is.readObject();
+			return nomAlum;
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Examen pedirExamen(String seleccion, String alumno) {
+		try {
+			os.writeBytes("Examen Alumno\n");
+			os.writeBytes(seleccion+"\n");
+			os.writeBytes(alumno+"\n");
+			os.flush();
+			Examen Exam= (Examen) is.readObject();
+			return Exam;
+			
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void cerrar() {
+		try {
+			is.close();
+			os.close();
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
