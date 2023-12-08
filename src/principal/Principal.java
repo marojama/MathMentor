@@ -248,10 +248,10 @@ public class Principal {
 		
 	}
 
-	public static String preguntarNumPrimera(int numero) {
+	public static String preguntarNumPrimera(String pregunta,String num) {
 		try {
-			os.writeBytes("Adivinar num\n");
-			os.writeInt(numero);
+			os.writeBytes(pregunta+"\n");
+			os.writeBytes(num+"\n");
 			os.flush();
 			return is.readLine();
 		} catch (IOException e) {
@@ -262,9 +262,9 @@ public class Principal {
 		return null;
 	}
 
-	public static String preguntarNum(int numero) {
+	public static String preguntarNum(String numero) {
 		try {
-			os.writeInt(numero);
+			os.writeBytes(numero+"\n");
 			os.flush();
 			return is.readLine();
 		} catch (IOException e) {

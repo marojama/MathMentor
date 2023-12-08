@@ -122,22 +122,54 @@ public class AtenderPeticion extends Thread {
 					String[] nomExam = devolverNomExamenes(e);
 					os.writeObject(nomExam);
 					os.flush();
-				}else if(opcion.equals("Adivinar num")) {
-					int n=is.readInt();
-					int adivina= (int) (Math.random()*100+1);
-					
-					while(n!=adivina) {
-						if(n>adivina) {
-							os.writeBytes("Te has pasado\n");
+				} else if (opcion.equals("Adivinar num")) {
+					adivinarNum();
+				} else if (opcion.equals("Heridos y ahogados")) {
+					String leido = is.readLine();
+					try {
+						int n = Integer.parseInt(leido);
+						int adivina = aleatorioNoRep4();
+						
+						int[] adivinaArray=new int[4];
+						adivinaArray[3]=adivina%10;
+						adivinaArray[2]=(adivina/10)%10;
+						adivinaArray[1]=(adivina/100)%10;
+						adivinaArray[0]=(adivina/1000)%10;
+
+						while (n != adivina) {
+							int heridos=0;
+							int muertos=0;
+							
+							int[] nArray=new int[4];
+							nArray[3]=n%10;
+							nArray[2]=(n/10)%10;
+							nArray[1]=(n/100)%10;
+							nArray[0]=(n/1000)%10;
+							
+							for(int i=0;i<4;i++) {
+								if(nArray[i]==adivinaArray[i]) {
+									muertos++;
+								}
+								else {
+									for(int j=0;j<4;j++) {
+										if(nArray[i]==adivinaArray[j]) {
+											heridos++;
+										}
+									}
+								}
+							}
+							os.writeBytes("Resultado: "+heridos+" heridos y "+muertos+" muertos\n");
+							os.flush();
+							leido = is.readLine();
+							n = Integer.parseInt(leido);
 						}
-						else {
-							os.writeBytes("Te has quedado corto\n");
-						}
+						os.writeBytes("Adivinado\n");
 						os.flush();
-						n=is.readInt();
+					} catch (NumberFormatException e) {
+						os.writeBytes("Error\n");
+						os.flush();
 					}
-					os.writeBytes("Adivinado\n");
-					os.flush();
+
 				}
 				opcion = is.readLine();
 			}
@@ -149,6 +181,83 @@ public class AtenderPeticion extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public static int aleatorioNoRep4() {
+		int primero = (int) (Math.random() * 10); // Num entre 0-9
+		int[] numero = new int[4];
+		int i = 0;
+
+		numero[0] = primero;
+
+		int segundo = (int) (Math.random() * 10);
+
+		while (i == 0) {
+			if (segundo != primero) {
+				numero[1] = segundo;
+				i = 1;
+			} else {
+				segundo = (int) (Math.random() * 10);
+			}
+		}
+
+		i = 0;
+		int tercero = (int) (Math.random() * 10);
+
+		while (i == 0) {
+			if (tercero != primero && tercero != segundo) {
+				numero[2] = tercero;
+				i = 1;
+			} else {
+				tercero = (int) (Math.random() * 10);
+			}
+		}
+
+		i = 0;
+		int cuarto = (int) (Math.random() * 10);
+
+		while (i == 0) {
+			if (cuarto != primero && cuarto != segundo && cuarto != tercero) {
+				numero[3] = cuarto;
+				i = 1;
+			} else {
+				cuarto = (int) (Math.random() * 10);
+			}
+		}
+
+		return (numero[0] * 1000 + numero[1] * 100 + numero[2] * 10 + numero[3]);
+	}
+
+	private void adivinarNum() {
+		try {
+			String leido = is.readLine();
+			int n = Integer.parseInt(leido);
+			int adivina = (int) (Math.random() * 100 + 1);
+
+			while (n != adivina) {
+				if (n > adivina) {
+					os.writeBytes("Te has pasado\n");
+				} else {
+					os.writeBytes("Te has quedado corto\n");
+				}
+				os.flush();
+				leido = is.readLine();
+				n = Integer.parseInt(leido);
+			}
+			os.writeBytes("Adivinado\n");
+			os.flush();
+		} catch (NumberFormatException e) {
+			try {
+				os.writeBytes("Error\n");
+				os.flush();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -352,15 +461,14 @@ public class AtenderPeticion extends Thread {
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer t = tf.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			
+
 			File f;
-			if(nuevo) {
-				f=new File("./" + usuario2 + "/" + nomFich + ".xml");
+			if (nuevo) {
+				f = new File("./" + usuario2 + "/" + nomFich + ".xml");
 				if (!f.exists()) {
 					f.createNewFile();
 				}
-			}
-			else {
+			} else {
 				f = new File("./" + usuario2 + "/" + nomFich.split(".xml")[0] + "Resuelto.xml");
 				if (!f.exists()) {
 					f.createNewFile();
@@ -368,7 +476,7 @@ public class AtenderPeticion extends Thread {
 				File antiguo = new File("./" + usuario2 + "/" + nomFich);
 				antiguo.delete();
 			}
-			
+
 			StreamResult result = new StreamResult(f);
 			t.transform(source, result);
 		} catch (ClassNotFoundException | IOException | ParserConfigurationException | TransformerException e) {

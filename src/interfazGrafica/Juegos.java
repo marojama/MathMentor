@@ -79,19 +79,24 @@ public class Juegos extends JFrame {
 		btnAdivinarNum.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String num=JOptionPane.showInputDialog(Juegos.this, "Adivina el número entre 1 y 100", "Adivina el número", JOptionPane.QUESTION_MESSAGE);
-				try{
-					int numero=Integer.parseInt(num);
-					String result=Principal.preguntarNumPrimera(numero);
-					while(!result.equals("Adivinado")) {
-						num=JOptionPane.showInputDialog(Juegos.this, "Ese no es el número."+result, "Adivina el número", JOptionPane.QUESTION_MESSAGE);
-						numero=Integer.parseInt(num);
-						result=Principal.preguntarNum(numero);
-					}
-					JOptionPane.showMessageDialog(Juegos.this, "Felicidades! Lo has adivinado", "Fin juego", JOptionPane.INFORMATION_MESSAGE);
-				}catch(NumberFormatException nfe) {
-					JOptionPane.showInputDialog(Juegos.this, "No es un número válido", "Error número", JOptionPane.ERROR_MESSAGE);
+				String num = JOptionPane.showInputDialog(Juegos.this, "Adivina el número entre 1 y 100",
+						"Adivina el número", JOptionPane.QUESTION_MESSAGE);
+				String result = Principal.preguntarNumPrimera("Adivinar num",num);
+				while (!result.equals("Adivinado") && !result.equals("Error")) {
+					num = JOptionPane.showInputDialog(Juegos.this, "Ese no es el número." + result, "Adivina el número",
+							JOptionPane.QUESTION_MESSAGE);
+					result = Principal.preguntarNum(num);
+
 				}
+				if(result.equals("Adivinado")) {
+					JOptionPane.showMessageDialog(Juegos.this, "Felicidades! Lo has adivinado", "Fin juego",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(Juegos.this, "Error, no has introducido un número válido", "Error juego",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 		btnAdivinarNum.setForeground(Color.WHITE);
@@ -145,12 +150,36 @@ public class Juegos extends JFrame {
 		lblAtras.setIcon(imagen3);
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
-		
+
 		JButton btnHeridosMuertos = new JButton("Heridos y muertos");
 		btnHeridosMuertos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JOptionPane.showMessageDialog(Juegos.this, "Estoy pensando en un número de 4 dígitos sin repetidos",
+						"Heridos y muertos", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(Juegos.this,
+						"Si tu número tiene algún dígito igual que el mio, y está en su lugar, te diré que está muerto.",
+						"Heridos y muertos", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(Juegos.this,
+						"Si el dígito está en mi número, pero en distinta posición, te diré que está herido",
+						"Heridos y muertos", JOptionPane.INFORMATION_MESSAGE);
+				String num = JOptionPane.showInputDialog(Juegos.this, "Introduce tu número de 4 cifras",
+						"Heridos y muertos", JOptionPane.QUESTION_MESSAGE);
 				
+				String result = Principal.preguntarNumPrimera("Heridos y ahogados",num);
+				while (!result.equals("Adivinado") && !result.equals("Error")) {
+					num = JOptionPane.showInputDialog(Juegos.this, "Ese no es el número." + result,
+							"Heridos y muertos", JOptionPane.QUESTION_MESSAGE);
+					result = Principal.preguntarNum(num);
+				}
+				if(result.equals("Adivinado")) {
+					JOptionPane.showMessageDialog(Juegos.this, "Felicidades! Lo has adivinado", "Fin juego",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(Juegos.this, "Error, no has introducido un número válido", "Error juego",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnHeridosMuertos.setForeground(Color.WHITE);
@@ -158,20 +187,20 @@ public class Juegos extends JFrame {
 		btnHeridosMuertos.setBackground(new Color(100, 182, 172));
 		btnHeridosMuertos.setBounds(428, 440, 300, 50);
 		contentPane.add(btnHeridosMuertos);
-		
+
 		JButton btnNewButton_2_1 = new JButton("<--");
 		btnNewButton_2_1.setForeground(Color.WHITE);
 		btnNewButton_2_1.setBackground(new Color(100, 182, 172));
 		btnNewButton_2_1.setBounds(783, 440, 50, 50);
 		contentPane.add(btnNewButton_2_1);
-		
+
 		JButton btnAdivinarNum_1_1 = new JButton("Adivina el número");
 		btnAdivinarNum_1_1.setForeground(Color.WHITE);
 		btnAdivinarNum_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnAdivinarNum_1_1.setBackground(new Color(100, 182, 172));
 		btnAdivinarNum_1_1.setBounds(428, 527, 300, 50);
 		contentPane.add(btnAdivinarNum_1_1);
-		
+
 		JButton btnNewButton_2_1_1 = new JButton("<--");
 		btnNewButton_2_1_1.setForeground(Color.WHITE);
 		btnNewButton_2_1_1.setBackground(new Color(100, 182, 172));
