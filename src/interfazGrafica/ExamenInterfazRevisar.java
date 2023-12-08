@@ -34,7 +34,7 @@ public class ExamenInterfazRevisar extends JFrame {
 	private ImageIcon imagen;
 	private int actualPregunta = 0;
 	private JRadioButton[] respuestas;
-	JButton btnComprobarSiguiente;
+	JButton btnComprobarSiguiente= new JButton("Siguiente");
 	JLabel lblPregunta;
 	JPanel panel;
 	JLabel lblNumPreg;
@@ -85,10 +85,10 @@ public class ExamenInterfazRevisar extends JFrame {
 		this.actualPregunta = 0;
 		corregirRespuesta();
 
-		ImageIcon imagen1 = new ImageIcon("./planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./flechita.png");
-
+		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
+		
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
 		lblPlanta1.setBounds(89, 0, 216, 510);
@@ -111,7 +111,6 @@ public class ExamenInterfazRevisar extends JFrame {
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
 
-		btnComprobarSiguiente = new JButton("Siguiente");
 		btnComprobarSiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

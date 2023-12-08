@@ -86,8 +86,8 @@ public class PantallaInicial extends JFrame {
 		btnInvitado.setBounds(490, 350, 300, 50);
 		contentPane.add(btnInvitado);
 
-		ImageIcon imagen1 = new ImageIcon("./planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);

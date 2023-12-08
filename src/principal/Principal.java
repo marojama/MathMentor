@@ -247,4 +247,31 @@ public class Principal {
 		}
 		
 	}
+
+	public static String preguntarNumPrimera(int numero) {
+		try {
+			os.writeBytes("Adivinar num\n");
+			os.writeInt(numero);
+			os.flush();
+			return is.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public static String preguntarNum(int numero) {
+		try {
+			os.writeInt(numero);
+			os.flush();
+			return is.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

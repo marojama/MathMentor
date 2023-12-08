@@ -10,6 +10,8 @@ import principal.Principal;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
@@ -73,12 +75,30 @@ public class Juegos extends JFrame {
 		btnNerdle.setBounds(428, 258, 300, 50);
 		contentPane.add(btnNerdle);
 
-		JButton btnJuegos = new JButton("...");
-		btnJuegos.setForeground(Color.WHITE);
-		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnJuegos.setBackground(new Color(100, 182, 172));
-		btnJuegos.setBounds(428, 350, 300, 50);
-		contentPane.add(btnJuegos);
+		JButton btnAdivinarNum = new JButton("Adivina el número");
+		btnAdivinarNum.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String num=JOptionPane.showInputDialog(Juegos.this, "Adivina el número entre 1 y 100", "Adivina el número", JOptionPane.QUESTION_MESSAGE);
+				try{
+					int numero=Integer.parseInt(num);
+					String result=Principal.preguntarNumPrimera(numero);
+					while(!result.equals("Adivinado")) {
+						num=JOptionPane.showInputDialog(Juegos.this, "Ese no es el número."+result, "Adivina el número", JOptionPane.QUESTION_MESSAGE);
+						numero=Integer.parseInt(num);
+						result=Principal.preguntarNum(numero);
+					}
+					JOptionPane.showMessageDialog(Juegos.this, "Felicidades! Lo has adivinado", "Fin juego", JOptionPane.INFORMATION_MESSAGE);
+				}catch(NumberFormatException nfe) {
+					JOptionPane.showInputDialog(Juegos.this, "No es un número válido", "Error número", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnAdivinarNum.setForeground(Color.WHITE);
+		btnAdivinarNum.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnAdivinarNum.setBackground(new Color(100, 182, 172));
+		btnAdivinarNum.setBounds(428, 350, 300, 50);
+		contentPane.add(btnAdivinarNum);
 
 		JButton btnE = new JButton("e");
 		btnE.setForeground(Color.WHITE);
@@ -92,9 +112,9 @@ public class Juegos extends JFrame {
 		btnNewButton_2.setBounds(783, 350, 50, 50);
 		contentPane.add(btnNewButton_2);
 
-		ImageIcon imagen1 = new ImageIcon("./planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./flechita.png");
+		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -125,6 +145,38 @@ public class Juegos extends JFrame {
 		lblAtras.setIcon(imagen3);
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
+		
+		JButton btnHeridosMuertos = new JButton("Heridos y muertos");
+		btnHeridosMuertos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		btnHeridosMuertos.setForeground(Color.WHITE);
+		btnHeridosMuertos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnHeridosMuertos.setBackground(new Color(100, 182, 172));
+		btnHeridosMuertos.setBounds(428, 440, 300, 50);
+		contentPane.add(btnHeridosMuertos);
+		
+		JButton btnNewButton_2_1 = new JButton("<--");
+		btnNewButton_2_1.setForeground(Color.WHITE);
+		btnNewButton_2_1.setBackground(new Color(100, 182, 172));
+		btnNewButton_2_1.setBounds(783, 440, 50, 50);
+		contentPane.add(btnNewButton_2_1);
+		
+		JButton btnAdivinarNum_1_1 = new JButton("Adivina el número");
+		btnAdivinarNum_1_1.setForeground(Color.WHITE);
+		btnAdivinarNum_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnAdivinarNum_1_1.setBackground(new Color(100, 182, 172));
+		btnAdivinarNum_1_1.setBounds(428, 527, 300, 50);
+		contentPane.add(btnAdivinarNum_1_1);
+		
+		JButton btnNewButton_2_1_1 = new JButton("<--");
+		btnNewButton_2_1_1.setForeground(Color.WHITE);
+		btnNewButton_2_1_1.setBackground(new Color(100, 182, 172));
+		btnNewButton_2_1_1.setBounds(783, 527, 50, 50);
+		contentPane.add(btnNewButton_2_1_1);
 
 		// Evento para que al cerrar la aplicación cierre los socket y no salte
 		// excepcion en el servidor
@@ -145,5 +197,4 @@ public class Juegos extends JFrame {
 		nn.setVisible(true);
 		this.dispose();
 	}
-
 }

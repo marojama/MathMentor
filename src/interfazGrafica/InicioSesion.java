@@ -73,10 +73,10 @@ public class InicioSesion extends JFrame {
 		btnEntrar.setBounds(490, 437, 300, 50);
 		contentPane.add(btnEntrar);
 
-		ImageIcon imagen1 = new ImageIcon("./planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./flechita.png");
-
+		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
+		
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
 		lblPlanta1.setBounds(89, 0, 216, 510);

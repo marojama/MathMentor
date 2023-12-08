@@ -122,6 +122,22 @@ public class AtenderPeticion extends Thread {
 					String[] nomExam = devolverNomExamenes(e);
 					os.writeObject(nomExam);
 					os.flush();
+				}else if(opcion.equals("Adivinar num")) {
+					int n=is.readInt();
+					int adivina= (int) (Math.random()*100+1);
+					
+					while(n!=adivina) {
+						if(n>adivina) {
+							os.writeBytes("Te has pasado\n");
+						}
+						else {
+							os.writeBytes("Te has quedado corto\n");
+						}
+						os.flush();
+						n=is.readInt();
+					}
+					os.writeBytes("Adivinado\n");
+					os.flush();
 				}
 				opcion = is.readLine();
 			}

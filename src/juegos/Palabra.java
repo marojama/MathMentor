@@ -1,4 +1,4 @@
-package nerdleNormal;
+package juegos;
 
 public class Palabra {
 	private int tam;
