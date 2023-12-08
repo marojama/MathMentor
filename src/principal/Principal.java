@@ -143,7 +143,12 @@ public class Principal {
 
 	public static void enviarExamen(Examen examen, String nombreFich, String usuario) {
 		try {
-			os.writeBytes("Examen hecho\n");
+			if(nombreFich.contains(".xml")) {
+				os.writeBytes("Examen hecho\n");
+			}
+			else {
+				os.writeBytes("Examen nuevo\n");
+			}
 			os.writeBytes(nombreFich+"\n");
 			os.writeBytes(usuario+"\n");
 			os.writeObject(examen);

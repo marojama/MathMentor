@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,16 +212,30 @@ public class PantallaProfesora extends JFrame {
 				pregunta=JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca la pregunta", "Pregunta", JOptionPane.QUESTION_MESSAGE);
 				if(pregunta!=null) {
 					Pregunta p=new Pregunta();
-					p.setEnunciado(pregunta);
+					p.setEnunciado("<html>"+pregunta+"</html>");
 					int n=Integer.parseInt(JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca el número de respuestas", "Número de respuestas", JOptionPane.QUESTION_MESSAGE));
 					List<String> respuestas=new ArrayList<>();
+					boolean correcta=false;
 					for(int i=0;i<n;i++) {
-						respuestas.add(JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca la respuestas "+i+1, "Respuestas", JOptionPane.QUESTION_MESSAGE));
-						
+						String r=JOptionPane.showInputDialog(PantallaProfesora.this, "Introduzca la respuestas "+(i+1), "Respuestas", JOptionPane.QUESTION_MESSAGE);
+						respuestas.add("<html>"+r+"</html>");
+						if(!correcta) {
+							int opcion = JOptionPane.showOptionDialog(PantallaProfesora.this,
+									"¿La respuesta que acabas de introducir es la correcta?", "Respuesta correcta", JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Si", "No" }, "Si");
+							if (opcion == 0) {
+								p.setCorrecta(i);
+								correcta=true;
+							}
+						}
 					}
-					
+					p.setRespuestas(respuestas);
+					preguntas.add(p);
 				}
 			}
+			e.setPreguntas(preguntas);
+			e.setFecha(LocalDateTime.now());
+			Principal.enviarExamen(e, tema, alumno);
 		}
 				
 	}
