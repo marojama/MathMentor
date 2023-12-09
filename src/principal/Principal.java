@@ -15,10 +15,12 @@ import java.net.Socket;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import Estadisticas.Jugador;
 import interfazGrafica.InicioSesion;
 import interfazGrafica.PantallaProfesora;
 import xml.Examen;
@@ -273,5 +275,33 @@ public class Principal {
 		}
 		
 		return null;
+	}
+
+	public static List<Jugador> pedirEstads(String juego) {
+		try {
+			os.writeBytes("Estadisticas\n");
+			os.writeBytes(juego+"\n");
+			os.flush();
+			List<Jugador> lista=(List<Jugador>) is.readObject();
+			return lista;
+		}catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void enviarEstads(String usuario, int intentos, long tiempo, String juego) {
+		try {
+			os.writeBytes("Enviar estadisticas\n");
+			os.writeBytes(juego+"\n");
+			os.writeBytes(usuario+"\n");
+			os.writeInt(intentos);
+			os.writeLong(tiempo);
+			os.flush();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

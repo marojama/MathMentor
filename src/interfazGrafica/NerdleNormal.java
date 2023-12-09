@@ -17,6 +17,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+//Al final no dio tiempo a llevar a cabo este juego,
+//pero lo dejo por si en algún futuro me decido a hacerlo
+
 public class NerdleNormal extends JFrame {
 
 	private JPanel contentPane;

@@ -33,6 +33,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import Estadisticas.Jugador;
 import xml.Examen;
 import xml.Pregunta;
 
@@ -43,7 +44,7 @@ public class AtenderPeticion extends Thread {
 	private ObjectOutputStream os;
 	private String usuario;
 	private String nomFich;
-
+	
 	public AtenderPeticion(Socket s) {
 
 		try {
@@ -56,6 +57,26 @@ public class AtenderPeticion extends Thread {
 			if (!f.exists()) {
 				try {
 					f.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			// Estadisticas juegos
+			File j1 = new File("AdivinarNum.xml");
+			if (!j1.exists()) {
+				try {
+					j1.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			File j2 = new File("HeridosYAhogados.xml");
+			if (!j2.exists()) {
+				try {
+					j2.createNewFile();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -74,8 +95,6 @@ public class AtenderPeticion extends Thread {
 			while (opcion != null) {
 				if (opcion.equals("Iniciar sesion")) {
 					inicioSesion();
-				} else if (opcion.equals("Nerdle")) {
-					nerdle();
 				} else if (opcion.equals("Examenes")) {
 					String[] nomExam = devolverNomExam(this.usuario);
 					os.writeObject(nomExam);
@@ -125,51 +144,18 @@ public class AtenderPeticion extends Thread {
 				} else if (opcion.equals("Adivinar num")) {
 					adivinarNum();
 				} else if (opcion.equals("Heridos y ahogados")) {
-					String leido = is.readLine();
-					try {
-						int n = Integer.parseInt(leido);
-						int adivina = aleatorioNoRep4();
-						
-						int[] adivinaArray=new int[4];
-						adivinaArray[3]=adivina%10;
-						adivinaArray[2]=(adivina/10)%10;
-						adivinaArray[1]=(adivina/100)%10;
-						adivinaArray[0]=(adivina/1000)%10;
-
-						while (n != adivina) {
-							int heridos=0;
-							int muertos=0;
-							
-							int[] nArray=new int[4];
-							nArray[3]=n%10;
-							nArray[2]=(n/10)%10;
-							nArray[1]=(n/100)%10;
-							nArray[0]=(n/1000)%10;
-							
-							for(int i=0;i<4;i++) {
-								if(nArray[i]==adivinaArray[i]) {
-									muertos++;
-								}
-								else {
-									for(int j=0;j<4;j++) {
-										if(nArray[i]==adivinaArray[j]) {
-											heridos++;
-										}
-									}
-								}
-							}
-							os.writeBytes("Resultado: "+heridos+" heridos y "+muertos+" muertos\n");
-							os.flush();
-							leido = is.readLine();
-							n = Integer.parseInt(leido);
-						}
-						os.writeBytes("Adivinado\n");
-						os.flush();
-					} catch (NumberFormatException e) {
-						os.writeBytes("Error\n");
-						os.flush();
-					}
-
+					heridosYMuertos();
+				} else if (opcion.equals("Estadisticas")) {
+					String juego = is.readLine();
+					List<Jugador> lista = enviarEstadisticas(juego);
+					os.writeObject(lista);
+					os.flush();
+				} else if (opcion.equals("Enviar estadisticas")) {
+					String juego = is.readLine();
+					String usuario = is.readLine();
+					int intentos = is.readInt();
+					long tiempo = is.readLong();
+					guardarEstadisticas(juego, usuario, intentos, tiempo);
 				}
 				opcion = is.readLine();
 			}
@@ -182,6 +168,181 @@ public class AtenderPeticion extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void guardarEstadisticas(String juego, String usuario2, int intentos, long tiempo) {
+		List<Jugador> estads= enviarEstadisticas(juego);
+
+		if(estads==null) {
+			Jugador j = new Jugador(usuario2, 1, intentos, tiempo);
+			estads=new ArrayList<>();
+			estads.add(j);
+		}
+		else {
+			boolean esta = false;
+
+			for (Jugador jugador : estads) {
+				if (jugador.getNombre().equals(usuario2)) {
+					esta = true;
+					if (jugador.getIntentos() > intentos) {
+						jugador.setIntentos(intentos);
+					}
+					if (jugador.getMejorTiempo() > tiempo) {
+						jugador.setMejorTiempo(tiempo);
+					}
+					int v=jugador.getVictorias();
+					jugador.setVictorias(++v);
+				}
+			}
+
+			if (!esta) {
+				Jugador j = new Jugador(usuario2, 1, intentos, tiempo);
+				estads.add(j);
+			}
+		}
+		
+		incluirEstads(juego,estads);
+
+	}
+
+	private void incluirEstads(String juego, List<Jugador> estads) {
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.newDocument();
+
+			Element jugadores = doc.createElement("jugadores");
+
+			for (int i = 0, n = estads.size(); i < n; i++) {
+				Element jugador = doc.createElement("jugador");
+
+				Element nombre = doc.createElement("nombre");
+				nombre.appendChild(doc.createTextNode(estads.get(i).getNombre()));
+				jugador.appendChild(nombre);
+
+				Element victorias = doc.createElement("victorias");
+				victorias.appendChild(doc.createTextNode(String.valueOf(estads.get(i).getVictorias())));
+				jugador.appendChild(victorias);
+
+				Element intentos = doc.createElement("intentos");
+				intentos.appendChild(doc.createTextNode(String.valueOf(estads.get(i).getIntentos())));
+				jugador.appendChild(intentos);
+
+				Element mejorTiempo = doc.createElement("mejorTiempo");
+				mejorTiempo.appendChild(doc.createTextNode(String.valueOf(estads.get(i).getMejorTiempo())));
+				jugador.appendChild(mejorTiempo);
+
+				jugadores.appendChild(jugador);
+
+			}
+
+			doc.appendChild(jugadores);
+
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer t = tf.newTransformer();
+			DOMSource source = new DOMSource(doc);
+
+			File f=new File(juego+".xml");
+			if(!f.exists()) {
+				f.createNewFile();
+			}
+
+			StreamResult result = new StreamResult(f);
+			t.transform(source, result);
+		} catch (IOException | ParserConfigurationException | TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private List<Jugador> enviarEstadisticas(String juego) {
+		try {
+			File f = new File(juego + ".xml");
+			if(f.length()==0) {
+				return null;
+			}
+			else {
+				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilder db = dbf.newDocumentBuilder();
+				Document doc = db.parse(f);
+
+				List<Jugador> lista = new ArrayList<>();
+
+				// Elemento <jugadores>
+				Element raiz = doc.getDocumentElement();
+				NodeList p = raiz.getElementsByTagName("jugador");
+				for (int i = 0; i < p.getLength(); i++) {
+					Jugador j = new Jugador();
+					j.setNombre(((Element) p.item(i)).getElementsByTagName("nombre").item(0).getTextContent());
+					j.setVictorias(Integer.parseInt(((Element) p.item(i)).getElementsByTagName("victorias").item(0).getTextContent()));
+					j.setIntentos(Integer.parseInt(((Element) p.item(i)).getElementsByTagName("intentos").item(0).getTextContent()));
+					j.setMejorTiempo(Integer.parseInt(((Element) p.item(i)).getElementsByTagName("mejorTiempo").item(0).getTextContent()));
+					lista.add(j);
+				}
+				return lista;
+			}
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (DOMException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private void heridosYMuertos() {
+		try {
+			String leido = is.readLine();
+			int n = Integer.parseInt(leido);
+			int adivina = aleatorioNoRep4();
+
+			int[] adivinaArray = new int[4];
+			adivinaArray[3] = adivina % 10;
+			adivinaArray[2] = (adivina / 10) % 10;
+			adivinaArray[1] = (adivina / 100) % 10;
+			adivinaArray[0] = (adivina / 1000) % 10;
+
+			while (n != adivina) {
+				int heridos = 0;
+				int muertos = 0;
+
+				int[] nArray = new int[4];
+				nArray[3] = n % 10;
+				nArray[2] = (n / 10) % 10;
+				nArray[1] = (n / 100) % 10;
+				nArray[0] = (n / 1000) % 10;
+
+				for (int i = 0; i < 4; i++) {
+					if (nArray[i] == adivinaArray[i]) {
+						muertos++;
+					} else {
+						for (int j = 0; j < 4; j++) {
+							if (nArray[i] == adivinaArray[j]) {
+								heridos++;
+							}
+						}
+					}
+				}
+				os.writeBytes("Resultado: " + heridos + " heridos y " + muertos + " muertos\n");
+				os.flush();
+				leido = is.readLine();
+				n = Integer.parseInt(leido);
+			}
+			os.writeBytes("Adivinado\n");
+			os.flush();
+		} catch (NumberFormatException | IOException e) {
+			try {
+				os.writeBytes("Error\n");
+				os.flush();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
 	}
 
 	public static int aleatorioNoRep4() {
@@ -309,11 +470,6 @@ public class AtenderPeticion extends Thread {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-	}
-
-	private void nerdle() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -486,7 +642,6 @@ public class AtenderPeticion extends Thread {
 	}
 
 	private Examen devolverExam(String usuario2, String e) {
-
 		try {
 			File exam = new File(usuario2 + "/" + e);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
