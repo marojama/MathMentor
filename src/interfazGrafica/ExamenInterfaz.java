@@ -194,7 +194,6 @@ public class ExamenInterfaz extends JFrame {
 											+ ". Tus resultados se han enviado a tu profe.\nRecuerda enviar una foto con las cuentas realizadas en el botón Enviar Archivo. SOLO SE ENVIA UNA FOTO!",
 									"Fin examen", JOptionPane.OK_OPTION);
 							examen.setNumCorrectas(correctas);
-							examen.setFecha(LocalDateTime.now());
 							Principal.enviarExamen(examen, nombreFich, usuario);
 							btnComprobarSiguiente.setText("Salir");
 							btnEnviarArchivo.setEnabled(true);

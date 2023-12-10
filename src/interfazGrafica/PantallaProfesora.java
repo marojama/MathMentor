@@ -274,7 +274,6 @@ public class PantallaProfesora extends JFrame {
 				}
 			}
 			e.setPreguntas(preguntas);
-			e.setFecha(LocalDateTime.now());
 			//Enviamos el examen al servidor
 			Principal.enviarExamen(e, tema, alumno);
 		}
