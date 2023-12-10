@@ -1,30 +1,19 @@
 package principal;
 
 import java.awt.EventQueue;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
-import Estadisticas.Jugador;
 import interfazGrafica.InicioSesion;
-import interfazGrafica.PantallaProfesora;
 import xml.Examen;
-import xml.Pregunta;
+import xml.Jugador;
 
 public class Principal {
 

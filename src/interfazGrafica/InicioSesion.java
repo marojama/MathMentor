@@ -1,13 +1,14 @@
-package interfazGrafica;
+// Interfaz Inicio Sesion
+// Aplicación: MathMentor
+// Autor: Marta Rojas
 
-import java.awt.EventQueue;
+package interfazGrafica;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import principal.Principal;
-import principal.Usuarios;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,10 +27,10 @@ import java.awt.event.WindowEvent;
 public class InicioSesion extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField tfUsuario;
 
 	/**
-	 * Create the frame.
+	 * Interfaz para iniciar sesión, en el caso de tener cuenta
 	 */
 	public InicioSesion() {
 		setResizable(false);
@@ -42,41 +43,18 @@ public class InicioSesion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("MathMentor");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
-		lblNewLabel.setBounds(10, 11, 1248, 84);
-		contentPane.add(lblNewLabel);
+		// Decoración interfaz
 
-		textField = new JTextField();
-		textField.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		textField.setBounds(420, 241, 434, 50);
-		contentPane.add(textField);
-		textField.setColumns(10);
-
-		JLabel lblNewLabel_1 = new JLabel("Usuario:");
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(10, 240, 387, 50);
-		contentPane.add(lblNewLabel_1);
-
-		JButton btnEntrar = new JButton("Entrar");
-		btnEntrar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cambiarPantallaPrincipal(textField.getText());
-			}
-		});
-		btnEntrar.setForeground(Color.WHITE);
-		btnEntrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnEntrar.setBackground(new Color(100, 182, 172));
-		btnEntrar.setBounds(490, 437, 300, 50);
-		contentPane.add(btnEntrar);
+		JLabel titulo = new JLabel("MathMentor");
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		titulo.setFont(new Font("Courier New", Font.PLAIN, 70));
+		titulo.setBounds(10, 11, 1248, 84);
+		contentPane.add(titulo);
 
 		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
 		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
 		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
-		
+
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
 		lblPlanta1.setBounds(89, 0, 216, 510);
@@ -87,7 +65,8 @@ public class InicioSesion extends JFrame {
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
 
-		JLabel lblAtras = new JLabel("");
+		// "Botón" para volver a la pantalla anterior
+		JLabel lblAtras = new JLabel();
 		lblAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -99,8 +78,36 @@ public class InicioSesion extends JFrame {
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
 
-		// Evento para que al cerrar la aplicación cierre los socket y no salte
-		// excepcion en el servidor
+		// TextField donde el usuario meterá su usuario
+		tfUsuario = new JTextField();
+		tfUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		tfUsuario.setBounds(420, 241, 434, 50);
+		contentPane.add(tfUsuario);
+		tfUsuario.setColumns(10);
+
+		// Label Usuario
+		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		lblUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUsuario.setBounds(10, 240, 387, 50);
+		contentPane.add(lblUsuario);
+
+		// Botón para entrar en la aplicación
+		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// Al clicar en entrar, debemos comprobar si es un usuario de la aplicación
+				cambiarPantallaPrincipal(tfUsuario.getText());
+			}
+		});
+		btnEntrar.setForeground(Color.WHITE);
+		btnEntrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnEntrar.setBackground(new Color(100, 182, 172));
+		btnEntrar.setBounds(490, 437, 300, 50);
+		contentPane.add(btnEntrar);
+
+		// Evento para que al cerrar la aplicación cierre los socket
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				Principal.cerrar();
@@ -108,15 +115,23 @@ public class InicioSesion extends JFrame {
 		});
 	}
 
+	/**
+	 * Método para cambiar a la pantalla principal.
+	 * Comprueba si es la profesora o sino, pregunta al servidor si dicho usuario está registrado
+	 * @param usuario: usuario introducido
+	 */
 	private void cambiarPantallaPrincipal(String usuario) {
-		if (usuario.equals("marojamaProfe")) {
+		//Si es la profesora, usuario de pruebas. Habrá que cambiarlo a algo mas dificil de adivinar
+		if (usuario.equals("Profe")) {
 			PantallaProfesora pr = new PantallaProfesora();
 			pr.setVisible(true);
 			this.dispose();
+		//Si el Principal nos dice que existe (al preguntarle al servidor), entramos
 		} else if (Principal.existeUsuario(usuario)) {
 			ExamenesYJuegos ej = new ExamenesYJuegos(usuario);
 			ej.setVisible(true);
 			this.dispose();
+		//Si no, mensaje de error
 		} else {
 			JOptionPane.showMessageDialog(this,
 					"No se encuentra tu usuario. Habla con tu profe o comprueba que lo hayas escrito bien.",

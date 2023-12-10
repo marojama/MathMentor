@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//@XmlRootElement(name="examen")
-//@XmlType(propOrder= {"tema","fecha","preguntas"})
 public class Examen implements Serializable {
 
 	private String tema;
@@ -42,8 +40,6 @@ public class Examen implements Serializable {
 		this.fecha = localDateTime;
 	}
 
-	// @XmlElementWrapper(name="preguntas")
-	// @XmlElement(name="pregunta")
 	public List<Pregunta> getPreguntas() {
 		return preguntas;
 	}
@@ -62,9 +58,7 @@ public class Examen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Examen [tema=" + tema + ", fecha=" + fecha + ", preguntas=" + preguntas + ", getTema()=" + getTema()
-				+ ", getFecha()=" + getFecha() + ", getPreguntas()=" + getPreguntas() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "Examen [tema=" + tema + ", fecha=" + fecha + ", numCorrectas=" + numCorrectas + ", preguntas="
+				+ preguntas + "]";
 	}
-
 }

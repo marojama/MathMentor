@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -33,8 +32,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import Estadisticas.Jugador;
 import xml.Examen;
+import xml.Jugador;
 import xml.Pregunta;
 
 public class AtenderPeticion extends Thread {
@@ -73,7 +72,7 @@ public class AtenderPeticion extends Thread {
 				}
 			}
 
-			File j2 = new File("HeridosYAhogados.xml");
+			File j2 = new File("HeridosYMuertos.xml");
 			if (!j2.exists()) {
 				try {
 					j2.createNewFile();
@@ -141,9 +140,9 @@ public class AtenderPeticion extends Thread {
 					String[] nomExam = devolverNomExamenes(e);
 					os.writeObject(nomExam);
 					os.flush();
-				} else if (opcion.equals("Adivinar num")) {
+				} else if (opcion.equals("AdivinarNum")) {
 					adivinarNum();
-				} else if (opcion.equals("Heridos y ahogados")) {
+				} else if (opcion.equals("HeridosYMuertos")) {
 					heridosYMuertos();
 				} else if (opcion.equals("Estadisticas")) {
 					String juego = is.readLine();
@@ -494,6 +493,9 @@ public class AtenderPeticion extends Thread {
 	private String[] devolverNomExamenes(String e) {
 		File carpeta = new File(e);
 		File[] ficheros = carpeta.listFiles();
+		if(ficheros==null) {
+			return null;
+		}
 		String[] aux = new String[ficheros.length];
 		int num = 0;
 		for (int i = 0, n = ficheros.length; i < n; i++) {

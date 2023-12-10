@@ -1,3 +1,7 @@
+// Interfaz inicial
+// Aplicación: MathMentor
+// Autor: Marta Rojas
+
 package interfazGrafica;
 
 import java.awt.EventQueue;
@@ -25,23 +29,8 @@ public class PantallaInicial extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PantallaInicial frame = new PantallaInicial();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	 * Interfaz de la pantalla principal, 
+	 * que permite iniciar sesión, o acceder como invitado
 	 */
 	public PantallaInicial() {
 		setResizable(false);
@@ -53,39 +42,15 @@ public class PantallaInicial extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		//Decoración interfaz
 
 		JLabel lblNombre = new JLabel("MathMentor");
 		lblNombre.setFont(new Font("Courier New", Font.PLAIN, 70));
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombre.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNombre);
-
-		JButton btnIniciarSesion = new JButton("Iniciar sesión");
-		btnIniciarSesion.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cambiarPantallaInicio();
-			}
-		});
-		btnIniciarSesion.setForeground(new Color(255, 255, 255));
-		btnIniciarSesion.setBackground(new Color(100, 182, 172));
-		btnIniciarSesion.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnIniciarSesion.setBounds(490, 258, 300, 50);
-		contentPane.add(btnIniciarSesion);
-
-		JButton btnInvitado = new JButton("Invitado");
-		btnInvitado.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cambiarPantallaJuegos();
-			}
-		});
-		btnInvitado.setForeground(new Color(255, 255, 255));
-		btnInvitado.setBackground(new Color(100, 182, 172));
-		btnInvitado.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnInvitado.setBounds(490, 350, 300, 50);
-		contentPane.add(btnInvitado);
-
+		
 		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
 		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
 
@@ -98,25 +63,46 @@ public class PantallaInicial extends JFrame {
 		lblPlanta2.setIcon(imagen2);
 		lblPlanta2.setBounds(985, 480, 200, 205);
 		contentPane.add(lblPlanta2);
+		
+		//Botón para iniciar sesión
 
-		// Evento para que al cerrar la aplicación cierre los socket y no salte
-		// excepcion en el servidor
+		JButton btnIniciarSesion = new JButton("Iniciar sesión");
+		btnIniciarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				InicioSesion is = new InicioSesion();
+				is.setVisible(true);
+				PantallaInicial.this.dispose();
+			}
+		});
+		btnIniciarSesion.setForeground(new Color(255, 255, 255));
+		btnIniciarSesion.setBackground(new Color(100, 182, 172));
+		btnIniciarSesion.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnIniciarSesion.setBounds(490, 258, 300, 50);
+		contentPane.add(btnIniciarSesion);
+		
+		//Botón para entrar como invitado
+
+		JButton btnInvitado = new JButton("Invitado");
+		btnInvitado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ExamenesYJuegos ej = new ExamenesYJuegos("invitado");
+				ej.setVisible(true);
+				PantallaInicial.this.dispose();
+			}
+		});
+		btnInvitado.setForeground(new Color(255, 255, 255));
+		btnInvitado.setBackground(new Color(100, 182, 172));
+		btnInvitado.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnInvitado.setBounds(490, 350, 300, 50);
+		contentPane.add(btnInvitado);
+
+		// Evento para que al cerrar la aplicación cierre los socket
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				Principal.cerrar();
 			}
 		});
-	}
-
-	private void cambiarPantallaInicio() {
-		InicioSesion is = new InicioSesion();
-		is.setVisible(true);
-		this.dispose();
-	}
-
-	private void cambiarPantallaJuegos() {
-		ExamenesYJuegos ej = new ExamenesYJuegos("invitado");
-		ej.setVisible(true);
-		this.dispose();
 	}
 }

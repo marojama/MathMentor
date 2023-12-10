@@ -33,7 +33,6 @@ public class Pregunta implements Serializable{
 		this.enunciado = enunciado;
 	}
 
-	//@XmlElement(name="respuesta")
 	public List<String> getRespuestas() {
 		return respuestas;
 	}

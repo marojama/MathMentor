@@ -1,4 +1,4 @@
-package Estadisticas;
+package xml;
 
 import java.io.Serializable;
 
@@ -57,7 +57,7 @@ public class Jugador implements Serializable{
 
 	@Override
 	public String toString() {
-		return nombre + " - Victorias=" + victorias + " - Intentos=" + intentos + " - Tiempo=" + mejorTiempo/1000 +"s";
+		return "<html>"+nombre + "&emsp; - &emsp;Victorias totales=" + victorias + "&emsp; - &emsp;Mejor nº intentos=" + intentos + "&emsp; - &emsp;Mejor tiempo=" + mejorTiempo/1000 +"s"+"</html>";
 	}
 
 }

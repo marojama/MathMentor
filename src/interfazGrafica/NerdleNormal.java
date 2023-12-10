@@ -1,13 +1,14 @@
-package interfazGrafica;
+// Interfaz Juegos
+// Aplicación: MathMentor
+// Autor: Marta Rojas
 
-import java.awt.EventQueue;
+package interfazGrafica;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import principal.Principal;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;

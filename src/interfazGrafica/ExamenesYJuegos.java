@@ -1,6 +1,8 @@
-package interfazGrafica;
+// Interfaz Examenes y Juegos
+// Aplicación: MathMentor
+// Autor: Marta Rojas
 
-import java.awt.EventQueue;
+package interfazGrafica;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,7 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 public class ExamenesYJuegos extends JFrame {
 
@@ -30,23 +31,8 @@ public class ExamenesYJuegos extends JFrame {
 	private String usuario;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ExamenesYJuegos frame = new ExamenesYJuegos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	 * Interfaz con los botones para que un alumno pueda acceder a examenes y juegos
+	 * o para que un invitado pueda acceder a los juegos únicamente
 	 */
 	public ExamenesYJuegos() {
 		setResizable(false);
@@ -59,49 +45,14 @@ public class ExamenesYJuegos extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		//Decoraciones interfaz
+		
 		JLabel lblNewLabel = new JLabel("MathMentor");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Courier New", Font.PLAIN, 70));
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
-
-		btnExamenes = new JButton("Examenes");
-		btnExamenes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String[] listaExamenes = Principal.nombreExamenes();
-				if (listaExamenes.length==0) {
-					JOptionPane.showMessageDialog(ExamenesYJuegos.this,
-							"Hoy no tienes examenes pendientes, pero puedes disfrutar de los juegos para repasar",
-							"No hay examenes disponibles", JOptionPane.OK_OPTION);
-				} else {
-					String seleccion = (String) JOptionPane.showInputDialog(ExamenesYJuegos.this,
-							"Selecciona el examen a realizar", "Selección examen", JOptionPane.QUESTION_MESSAGE, null,
-							listaExamenes, listaExamenes[0]);
-					new ExamenInterfaz(seleccion, usuario).setVisible(true);
-					ExamenesYJuegos.this.dispose();
-				}
-			}
-		});
-		btnExamenes.setForeground(Color.WHITE);
-		btnExamenes.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnExamenes.setBackground(new Color(100, 182, 172));
-		btnExamenes.setBounds(490, 258, 300, 50);
-		contentPane.add(btnExamenes);
-
-		btnJuegos = new JButton("Juegos");
-		btnJuegos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cambiarPantallaJuegos();
-			}
-		});
-		btnJuegos.setForeground(Color.WHITE);
-		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		btnJuegos.setBackground(new Color(100, 182, 172));
-		btnJuegos.setBounds(490, 350, 300, 50);
-		contentPane.add(btnJuegos);
-
+		
 		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
 		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
 		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
@@ -132,6 +83,53 @@ public class ExamenesYJuegos extends JFrame {
 		lblAtras.setIcon(imagen3);
 		lblAtras.setBounds(10, 11, 50, 50);
 		contentPane.add(lblAtras);
+		
+		//Botón Exámenes
+
+		btnExamenes = new JButton("Examenes");
+		btnExamenes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//Le pedimos la lista con el nombre de los examenes al principal
+				String[] listaExamenes = Principal.nombreExamenes();
+				//Por si no tiene examenes
+				if (listaExamenes==null) {
+					JOptionPane.showMessageDialog(ExamenesYJuegos.this,
+							"Hoy no tienes examenes pendientes, pero puedes disfrutar de los juegos para repasar",
+							"No hay examenes disponibles", JOptionPane.OK_OPTION);
+				} else {
+					//Selecciona un examen de la lista
+					String seleccion = (String) JOptionPane.showInputDialog(ExamenesYJuegos.this,
+							"Selecciona el examen a realizar", "Selección examen", JOptionPane.QUESTION_MESSAGE, null,
+							listaExamenes, listaExamenes[0]);
+					//Si el usuario no le ha dado a cancelar, abrimos la interfaz del examen
+					if(seleccion!=null) {
+						new ExamenInterfaz(seleccion, usuario,false).setVisible(true);
+						ExamenesYJuegos.this.dispose();
+					}
+				}
+			}
+		});
+		btnExamenes.setForeground(Color.WHITE);
+		btnExamenes.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnExamenes.setBackground(new Color(100, 182, 172));
+		btnExamenes.setBounds(490, 258, 300, 50);
+		contentPane.add(btnExamenes);
+
+		//Botón juegos
+		
+		btnJuegos = new JButton("Juegos");
+		btnJuegos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cambiarPantallaJuegos();
+			}
+		});
+		btnJuegos.setForeground(Color.WHITE);
+		btnJuegos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		btnJuegos.setBackground(new Color(100, 182, 172));
+		btnJuegos.setBounds(490, 350, 300, 50);
+		contentPane.add(btnJuegos);
 
 		// Evento para que al cerrar la aplicación cierre los socket y no salte
 		// excepcion en el servidor
@@ -142,6 +140,10 @@ public class ExamenesYJuegos extends JFrame {
 		});
 	}
 
+	/**
+	 * Constructor con el parámetro del nombre de usuario
+	 * @param usuario: conteniendo el nombre del usuario o invitado, en caso de ser un invitado no registrado
+	 */
 	public ExamenesYJuegos(String usuario) {
 		this();
 		this.usuario = usuario;
@@ -150,6 +152,9 @@ public class ExamenesYJuegos extends JFrame {
 		}
 	}
 
+	/**
+	 * Método para pasar de la interfaz de examenes y juegos a la de los juegos
+	 */
 	private void cambiarPantallaJuegos() {
 		Juegos j = new Juegos(this.usuario);
 		j.setVisible(true);
