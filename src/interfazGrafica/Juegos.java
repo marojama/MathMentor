@@ -54,10 +54,10 @@ public class Juegos extends JFrame {
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
 
-		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
-		ImageIcon imagen4 = new ImageIcon("./src/estadisticas.png");
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./flechita.png");
+		ImageIcon imagen4 = new ImageIcon("./estadisticas.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -143,7 +143,7 @@ public class Juegos extends JFrame {
 				while (!result.equals("Adivinado") && !result.equals("Error")) {
 					// Con result, mostramos lo que el servidor nos manda, que puede ser: Te has
 					// pasado, Te has quedado corto
-					num = JOptionPane.showInputDialog(Juegos.this, "Ese no es el número." + result, "Adivina el número",
+					num = JOptionPane.showInputDialog(Juegos.this, "Ese no es el número. " + result, "Adivina el número",
 							JOptionPane.QUESTION_MESSAGE);
 					result = Principal.preguntarNum(num);
 					// Vamos sumando el número de intentos que necesita el usuario
@@ -170,7 +170,7 @@ public class Juegos extends JFrame {
 
 			}
 		});
-		btnAdivinarNum.setForeground(Color.WHITE);
+		btnAdivinarNum.setForeground(Color.BLACK);
 		btnAdivinarNum.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnAdivinarNum.setBackground(new Color(100, 182, 172));
 		btnAdivinarNum.setBounds(428, 250, 300, 50);
@@ -197,7 +197,7 @@ public class Juegos extends JFrame {
 				String num = JOptionPane.showInputDialog(Juegos.this, "Introduce tu número de 4 cifras",
 						"Heridos y muertos", JOptionPane.QUESTION_MESSAGE);
 				// Leemos lo introducido por el usuario y se lo pasamos al servidor
-				String result = Principal.preguntarNumPrimera("HeridosyMuertos", num);
+				String result = Principal.preguntarNumPrimera("HeridosYMuertos", num);
 				// Iniciamos las variables de las estadísticas
 				int intentos = 1;
 				long time = System.currentTimeMillis();
@@ -205,7 +205,7 @@ public class Juegos extends JFrame {
 				while (!result.equals("Adivinado") && !result.equals("Error")) {
 					// Con result, mostramos lo que el servidor nos manda, es decir, el número de
 					// heridos y muertos
-					num = JOptionPane.showInputDialog(Juegos.this, "Ese no es el número." + result, "Heridos y muertos",
+					num = JOptionPane.showInputDialog(Juegos.this, "Ese no es el número. " + result, "HeridosYMuertos",
 							JOptionPane.QUESTION_MESSAGE);
 					result = Principal.preguntarNum(num);
 					// Vamos sumando el número de intentos que necesita el usuario
@@ -231,7 +231,7 @@ public class Juegos extends JFrame {
 				}
 			}
 		});
-		btnHeridosMuertos.setForeground(Color.WHITE);
+		btnHeridosMuertos.setForeground(Color.BLACK);
 		btnHeridosMuertos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnHeridosMuertos.setBackground(new Color(100, 182, 172));
 		btnHeridosMuertos.setBounds(428, 350, 300, 50);

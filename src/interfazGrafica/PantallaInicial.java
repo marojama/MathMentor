@@ -14,6 +14,9 @@ import principal.Principal;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -33,6 +36,15 @@ public class PantallaInicial extends JFrame {
 	 * que permite iniciar sesión, o acceder como invitado
 	 */
 	public PantallaInicial() {
+		
+		// Para que en MacOS tambien se vea bien, sino no se leen los botones
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
+		}
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
@@ -51,8 +63,8 @@ public class PantallaInicial extends JFrame {
 		lblNombre.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNombre);
 		
-		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -75,7 +87,7 @@ public class PantallaInicial extends JFrame {
 				PantallaInicial.this.dispose();
 			}
 		});
-		btnIniciarSesion.setForeground(new Color(255, 255, 255));
+		btnIniciarSesion.setForeground(Color.WHITE);
 		btnIniciarSesion.setBackground(new Color(100, 182, 172));
 		btnIniciarSesion.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnIniciarSesion.setBounds(490, 258, 300, 50);
@@ -92,7 +104,7 @@ public class PantallaInicial extends JFrame {
 				PantallaInicial.this.dispose();
 			}
 		});
-		btnInvitado.setForeground(new Color(255, 255, 255));
+		btnInvitado.setForeground(Color.WHITE);
 		btnInvitado.setBackground(new Color(100, 182, 172));
 		btnInvitado.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnInvitado.setBounds(490, 350, 300, 50);

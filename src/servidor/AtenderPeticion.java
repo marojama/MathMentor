@@ -764,8 +764,9 @@ public class AtenderPeticion extends Thread {
 			}
 		}
 		// Volvemos a guardar, pero en una lista del tamaño correcto
-		String[] examenes = new String[num];
+		String[] examenes = null;
 		if (num != 0) {
+			examenes = new String[num];
 			int j = 0;
 			for (int i = 0, n = ficheros.length; i < n; i++) {
 				if (aux[i] != null) {
@@ -1002,8 +1003,9 @@ public class AtenderPeticion extends Thread {
 			}
 		}
 		// Guardamos los examenes en una lista del tamaño correcto
-		String[] examenes = new String[num];
+		String[] examenes = null;
 		if (num != 0) {
+			examenes = new String[num];
 			int j = 0;
 			for (int i = 0, n = (int) ficheros.length; i < n; i++) {
 				if (aux[i] != null) {

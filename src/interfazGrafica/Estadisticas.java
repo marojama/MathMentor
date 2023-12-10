@@ -70,9 +70,9 @@ public class Estadisticas extends JFrame {
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
 
-		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./flechita.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -148,6 +148,8 @@ public class Estadisticas extends JFrame {
 				ordenarNombre();
 			}
 		});
+		btnNombre.setForeground(Color.WHITE);
+		btnNombre.setBackground(new Color(100,182,172));
 		btnNombre.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnNombre.setBounds(345, 105, 102, 30);
 		contentPane.add(btnNombre);
@@ -160,6 +162,8 @@ public class Estadisticas extends JFrame {
 				ordenarTiempo();
 			}
 		});
+		btnTiempo.setForeground(Color.WHITE);
+		btnTiempo.setBackground(new Color(100,182,172));
 		btnTiempo.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnTiempo.setBounds(835, 105, 100, 30);
 		contentPane.add(btnTiempo);
@@ -172,6 +176,8 @@ public class Estadisticas extends JFrame {
 				ordenarVictorias();
 			}
 		});
+		btnVictorias.setForeground(Color.WHITE);
+		btnVictorias.setBackground(new Color(100,182,172));
 		btnVictorias.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnVictorias.setBounds(500, 105, 105, 30);
 		contentPane.add(btnVictorias);
@@ -184,6 +190,8 @@ public class Estadisticas extends JFrame {
 				ordenarIntentos();
 			}
 		});
+		btnIntentos.setForeground(Color.WHITE);
+		btnIntentos.setBackground(new Color(100,182,172));
 		btnIntentos.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnIntentos.setBounds(666, 106, 110, 30);
 		contentPane.add(btnIntentos);
@@ -205,7 +213,7 @@ public class Estadisticas extends JFrame {
 			for (Jugador jugador : estads) {
 				lmNombre.addElement(jugador.getNombre());
 				lmIntentos.addElement(String.valueOf(jugador.getIntentos()));
-				lmTiempo.addElement(String.valueOf(jugador.getMejorTiempo()));
+				lmTiempo.addElement(jugador.getMejorTiempo()/1000+"s");
 				lmVictorias.addElement(String.valueOf(jugador.getVictorias()));
 			}
 		}

@@ -53,9 +53,9 @@ public class ExamenesYJuegos extends JFrame {
 		lblNewLabel.setBounds(10, 11, 1248, 84);
 		contentPane.add(lblNewLabel);
 		
-		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./flechita.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);

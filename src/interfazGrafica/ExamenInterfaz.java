@@ -82,9 +82,9 @@ public class ExamenInterfaz extends JFrame {
 		titulo.setBounds(10, 11, 1248, 84);
 		contentPane.add(titulo);
 
-		ImageIcon imagen1 = new ImageIcon("./src/planta1.png");
-		ImageIcon imagen2 = new ImageIcon("./src/planta2.png");
-		ImageIcon imagen3 = new ImageIcon("./src/flechita.png");
+		ImageIcon imagen1 = new ImageIcon("./planta1.png");
+		ImageIcon imagen2 = new ImageIcon("./planta2.png");
+		ImageIcon imagen3 = new ImageIcon("./flechita.png");
 
 		JLabel lblPlanta1 = new JLabel();
 		lblPlanta1.setIcon(imagen1);
@@ -209,6 +209,8 @@ public class ExamenInterfaz extends JFrame {
 				}
 			}
 		});
+		btnComprobarSiguiente.setForeground(Color.WHITE);
+		btnComprobarSiguiente.setBackground(new Color(100,182,172));
 		btnComprobarSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnComprobarSiguiente.setBounds(560, 567, 141, 37);
 		contentPane.add(btnComprobarSiguiente);
@@ -263,6 +265,8 @@ public class ExamenInterfaz extends JFrame {
 			});
 			btnEnviarArchivo.setEnabled(false);
 		}
+		btnEnviarArchivo.setForeground(Color.WHITE);
+		btnEnviarArchivo.setBackground(new Color(100,182,172));
 		btnEnviarArchivo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnEnviarArchivo.setBounds(750, 567, 175, 37);
 		contentPane.add(btnEnviarArchivo);
