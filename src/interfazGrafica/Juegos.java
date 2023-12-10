@@ -170,7 +170,7 @@ public class Juegos extends JFrame {
 
 			}
 		});
-		btnAdivinarNum.setForeground(Color.BLACK);
+		btnAdivinarNum.setForeground(Color.WHITE);
 		btnAdivinarNum.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnAdivinarNum.setBackground(new Color(100, 182, 172));
 		btnAdivinarNum.setBounds(428, 250, 300, 50);
@@ -231,7 +231,7 @@ public class Juegos extends JFrame {
 				}
 			}
 		});
-		btnHeridosMuertos.setForeground(Color.BLACK);
+		btnHeridosMuertos.setForeground(Color.WHITE);
 		btnHeridosMuertos.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		btnHeridosMuertos.setBackground(new Color(100, 182, 172));
 		btnHeridosMuertos.setBounds(428, 350, 300, 50);
