@@ -76,7 +76,7 @@ public class Juegos extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				// Usuario invitado. Acceso limitado
 				if (usuario == null || usuario.equals("invitado")) {
-					new ExamenesYJuegos().setVisible(true);
+					new ExamenesYJuegos(usuario).setVisible(true);
 					dispose();
 					// Profesora. Acceso a opciones de profesora
 				} else if (usuario.equals("Profe")) {
