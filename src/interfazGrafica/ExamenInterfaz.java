@@ -60,10 +60,13 @@ public class ExamenInterfaz extends JFrame {
 		setResizable(false);
 		this.nombreFich = seleccion;
 		// Pedimos al principal el examen a realizar/corregir
-		this.examen = Principal.pedirExamen(seleccion);
 		// Si es la profe, pedimos además la posible imagen que halla mandado el alumno
 		if (profe) {
+			this.examen = Principal.pedirExamen(seleccion,usuario);
 			this.imagen = Principal.pedirImagen();
+		}
+		else {
+			this.examen = Principal.pedirExamen(seleccion);
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
